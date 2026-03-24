@@ -50,20 +50,26 @@
                     }
 
                     const interval = setInterval(() => {
+                        let isInsideTag = false;
                         el.innerHTML = originalHTML
                             .split('')
                             .map((char, index) => {
-                                if (index < iterations || char === '<' || char === '>') return char;
+                                if (char === '<') isInsideTag = true;
+                                if (isInsideTag) {
+                                    if (char === '>') isInsideTag = false;
+                                    return char;
+                                }
+                                if (index < iterations) return char;
                                 return characters[Math.floor(Math.random() * characters.length)];
                             })
                             .join('');
                         
-                        // Sound nur bei jedem 3. Schritt um die Ohren nicht zu sprengen
                         if (iterations % 90 === 0) playTick();
                         
                         if (iterations >= originalHTML.length) {
                             clearInterval(interval);
-                            audioCtx.close(); // Sound-Engine abschalten wenn fertig
+                            el.innerHTML = originalHTML; // Finaler Check für Sicherheit
+                            audioCtx.close();
                         }
                         iterations += 30;
                     }, 30);

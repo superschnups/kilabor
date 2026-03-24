@@ -54,13 +54,19 @@
                 
                 <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
                     $status = get_post_meta(get_the_ID(), 'status_class', true) ?: 'stable';
+                    $thumb = get_post_meta(get_the_ID(), 'project_thumb', true);
                 ?>
                     <a href="<?php the_permalink(); ?>" class="portfolio-link project-card" data-category="<?php echo $status; ?>">
                         <div class="portfolio-item">
                             <span class="status-tag <?php echo $status; ?>">
                                 <?php echo get_post_meta(get_the_ID(), 'status_label', true) ?: 'AKTIV'; ?>
                             </span>
-                            <h3><?php the_title(); ?></h3>
+                            <div class="project-header-wrap">
+                                <?php if ($thumb): ?>
+                                    <img src="<?php echo $thumb; ?>" class="project-thumb" alt="Preview">
+                                <?php endif; ?>
+                                <h3><?php the_title(); ?></h3>
+                            </div>
                             <div class="item-excerpt">
                                 <?php the_excerpt(); ?>
                             </div>

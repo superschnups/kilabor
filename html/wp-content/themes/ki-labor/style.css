@@ -110,6 +110,7 @@ body::before {
 }
 
 /* TERMINAL STYLES */
+.container {
     max-width: 900px;
     margin: 0 auto;
     padding: 40px 20px;
@@ -238,6 +239,29 @@ body.mode-security::after {
     transform: translate(-50%, -50%) rotate(-15deg);
 }
 
+/* 4. GHOST MODE (Stealth & Invisibility) */
+body.mode-ghost #system-log {
+    opacity: 0.15;
+    filter: blur(1px);
+    transition: all 2s ease;
+    animation: ghost-pulse 4s infinite;
+}
+
+body.mode-ghost .portfolio-grid {
+    filter: grayscale(1) brightness(0.5);
+    pointer-events: none;
+}
+
+body.mode-ghost #terminal-input {
+    color: #111; /* Fast unsichtbar */
+}
+
+@keyframes ghost-pulse {
+    0% { opacity: 0.15; }
+    50% { opacity: 0.3; }
+    100% { opacity: 0.15; }
+}
+
 /* TERMINAL STYLES */
 #system-log {
     background: #000;
@@ -259,6 +283,23 @@ body.mode-security::after {
     display: flex;
     flex-direction: column-reverse;
 }
+
+.log-entry.ghost {
+    color: rgba(0, 255, 0, 0.4);
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px rgba(0, 255, 0, 0.2);
+}
+
+.log-entry.user-cmd {
+    color: var(--accent-orange);
+    font-weight: bold;
+}
+
+.log-entry.info { color: var(--accent-gold); }
+.log-entry.error { color: #f00; font-weight: bold; }
+.log-entry.ok { color: #0f0; }
+.log-entry.warn { color: #ff0; }
 
 .terminal-input-line {
     display: flex;
@@ -429,12 +470,55 @@ body.mode-anarchy .hero-image {
     transform: translateY(-5px);
 }
 
+/* PROJECT THUMBNAILS (Evidence Photo Style) */
+.project-header-wrap {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #222;
+    padding-bottom: 15px;
+}
+
+.project-thumb {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border: 3px solid #eee; /* Polaroid Rand */
+    filter: grayscale(1) contrast(1.2) sepia(0.3);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    transform: rotate(-3deg);
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.5);
+    flex-shrink: 0;
+}
+
+/* Klebestreifen oben links */
+.project-thumb::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    width: 30px;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateX(-50%);
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+.portfolio-link:hover .project-thumb {
+    filter: grayscale(0) contrast(1);
+    transform: rotate(0deg) scale(1.1);
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+}
+
 .portfolio-item h3 {
     color: var(--accent-gold);
-    margin-top: 0;
-    font-size: 1.1rem;
-    border-bottom: 1px solid #222;
-    padding-bottom: 10px;
+    margin: 0;
+    font-size: 1rem;
+    flex-grow: 1;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .status-tag {
@@ -445,6 +529,7 @@ body.mode-anarchy .hero-image {
     top: 10px;
     right: 10px;
     border: 1px solid #444;
+    z-index: 10;
 }
 
 .status-tag.stable { color: #0f0; border-color: #0f0; }

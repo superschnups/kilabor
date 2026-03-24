@@ -47,6 +47,15 @@
             osc.stop(audioCtx.currentTime + 0.03);
         }
 
+        // --- INTERACTION HELPER FOR AUDIO ---
+        function ensureAudio() {
+            if (audioCtx && audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+        }
+        document.addEventListener('click', ensureAudio);
+        document.addEventListener('keydown', ensureAudio);
+
         function startBoot() {
             // Reset UI for Reboot
             mainContent.classList.remove('visible');
@@ -139,6 +148,8 @@
             switch(cmd) {
                 case 'help':
                     log('VERFÜGBARE PROTOKOLLE:', 'info');
+                    log(' - ghost    : Stealth-Modus (Unsichtbarkeit)');
+                    log(' - hack     : Matrix-Stream starten');
                     log(' - matrix   : KI-Kernel initialisieren');
                     log(' - anarchy  : Realitätsverzerrung');
                     log(' - bypass   : Sicherheits-Override');
@@ -146,6 +157,45 @@
                     log(' - destruct : System-Selbstzerstörung');
                     log(' - reboot   : Manueller System-Neustart');
                     log(' - clear    : Log-Speicher löschen');
+                    break;
+                case 'ghost':
+                    if (document.body.classList.contains('mode-ghost')) {
+                        log('>> REVEALING SYSTEM SIGNATURES...', 'info');
+                        document.body.classList.remove('mode-ghost');
+                        document.querySelector('.prompt').textContent = '> ';
+                    } else {
+                        log('>> INITIATING STEALTH PROTOCOL...', 'ghost');
+                        let wipeLines = 0;
+                        const wipeInterval = setInterval(() => {
+                            let ip = Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255);
+                            log('SCRAMBLING IP: ' + ip + ' -> [ENCRYPTED]', 'ghost');
+                            wipeLines++;
+                            if (wipeLines > 10) {
+                                clearInterval(wipeInterval);
+                                log('>> SCRAMBLING IDENTITY SIGNATURES...', 'ghost');
+                                setTimeout(() => {
+                                    document.body.classList.add('mode-ghost');
+                                    log('>> [STATUS]: GHOST MODE ACTIVE', 'ok');
+                                    document.querySelector('.prompt').textContent = '[GHOST]> ';
+                                }, 800);
+                            }
+                        }, 120);
+                    }
+                    break;
+                case 'hack':
+                    log('>> INITIATING NEURAL HACK...', 'warn');
+                    const chars = '0123456789ABCDEFHIJKLMNOPQRSTUVWXYZ$@#%&*';
+                    let hackLines = 0;
+                    const hackInterval = setInterval(() => {
+                        let line = '';
+                        for(let i=0; i<30; i++) line += chars[Math.floor(Math.random()*chars.length)];
+                        log(line, 'ghost');
+                        hackLines++;
+                        if (hackLines > 20) {
+                            clearInterval(hackInterval);
+                            log('>> HACK COMPLETE. ACCESS GRANTED.', 'ok');
+                        }
+                    }, 100);
                     break;
                 case 'reboot': startBoot(); break;
                 case 'whoami': log('IDENTITÄT: OVERLORD SASCHA RODE', 'info'); break;
