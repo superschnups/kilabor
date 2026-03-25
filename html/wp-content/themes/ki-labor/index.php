@@ -31,11 +31,17 @@
             <button id="btn-security" class="switch-btn">SECURITY-BYPASS</button>
         </div>
 
-        <div id="system-log">
-            <div id="log-output"></div>
-            <div class="terminal-input-line">
-                <span class="prompt">></span>
-                <input type="text" id="terminal-input" placeholder="SYSTEMBEFEHL EINGEBEN (help für Liste)..." autocomplete="off">
+        <div class="terminal-wrapper" style="margin-top: 30px;">
+            <div class="terminal-topbar" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px;">
+                <span style="color: var(--accent-gold); font-size: 0.8rem; letter-spacing: 1px;">// SECURE_TERMINAL_ACCESS</span>
+                <button id="btn-sfx" style="background: transparent; border: 1px solid #0f0; color: #0f0; font-family: 'Courier New', monospace; font-size: 0.7rem; cursor: pointer; padding: 2px 8px; transition: all 0.2s;">[ SFX: ON ]</button>
+            </div>
+            <div id="system-log" style="margin-top: 0;">
+                <div id="log-output"></div>
+                <div class="terminal-input-line">
+                    <span class="prompt">></span>
+                    <input type="text" id="terminal-input" placeholder="SYSTEMBEFEHL EINGEBEN (help für Liste)..." autocomplete="off">
+                </div>
             </div>
         </div>
 

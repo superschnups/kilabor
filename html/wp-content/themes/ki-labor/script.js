@@ -47,9 +47,64 @@
             osc.stop(audioCtx.currentTime + 0.03);
         }
 
-        // --- INTERACTION HELPER FOR AUDIO ---
+        // --- AUDIO ENGINE SFX ---
+        let sfxEnabled = true;
+
+        function playKeyClick() {
+            if (!sfxEnabled) return;
+            ensureAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(800, audioCtx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(100, audioCtx.currentTime + 0.02);
+            
+            gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.02);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.02);
+        }
+
+        function playErrorBeep() {
+            if (!sfxEnabled) return;
+            ensureAudio();
+            const osc = audioCtx.createOscillator();
+            const gain = audioCtx.createGain();
+            
+            osc.type = 'sawtooth';
+            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
+            osc.frequency.setValueAtTime(120, audioCtx.currentTime + 0.1); 
+            
+            gain.gain.setValueAtTime(0.04, audioCtx.currentTime);
+            gain.gain.linearRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+            
+            osc.connect(gain);
+            gain.connect(audioCtx.destination);
+            osc.start();
+            osc.stop(audioCtx.currentTime + 0.3);
+        }
+
+        function showSubtleMatrix() {
+            setTimeout(() => {
+                const matrixCanvas = document.getElementById('matrix-canvas');
+                if (matrixCanvas && !document.body.classList.contains('mode-kernel')) {
+                    matrixCanvas.style.opacity = '0.15';
+                    setTimeout(() => {
+                        if (!document.body.classList.contains('mode-kernel')) {
+                            matrixCanvas.style.opacity = '0';
+                        }
+                    }, 4000);
+                }
+            }, 100);
+        }
+
         function ensureAudio() {
-            if (audioCtx && audioCtx.state === 'suspended') {
+            if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            if (audioCtx.state === 'suspended') {
                 audioCtx.resume();
             }
         }
@@ -79,6 +134,7 @@
                         bootScreen.style.transition = 'opacity 1s';
                         bootScreen.style.opacity = '0';
                         mainContent.classList.add('visible');
+                        showSubtleMatrix();
                         setTimeout(() => {
                             bootScreen.style.display = 'none';
                         }, 1000);
@@ -103,6 +159,7 @@
             bootScreen.style.display = 'none';
             mainContent.classList.add('visible');
             mainContent.style.opacity = '1';
+            showSubtleMatrix();
         }
 
         // --- LOG & TERMINAL LOGIC ---
@@ -135,12 +192,26 @@
             }
         }, 30000);
 
+        const btnSfx = document.getElementById('btn-sfx');
+        if (btnSfx) {
+            btnSfx.addEventListener('click', () => {
+                sfxEnabled = !sfxEnabled;
+                btnSfx.textContent = sfxEnabled ? '[ SFX: ON ]' : '[ SFX: OFF ]';
+                btnSfx.style.color = sfxEnabled ? '#0f0' : '#888';
+                btnSfx.style.borderColor = sfxEnabled ? '#0f0' : '#444';
+                if (sfxEnabled) playKeyClick();
+            });
+        }
+
         terminalInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
+                playKeyClick();
                 const command = this.value.toLowerCase().trim();
                 log('> ' + command, 'user-cmd');
                 this.value = '';
                 executeCommand(command);
+            } else if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Tab') {
+                playKeyClick();
             }
         });
 
@@ -154,6 +225,10 @@
                     log(' - anarchy  : Realitätsverzerrung');
                     log(' - bypass   : Sicherheits-Override');
                     log(' - whoami   : Identitäts-Check');
+                    log(' - trace    : Origin-IP lokalisieren');
+                    log(' - ping     : Netzwerk-Latenz Check');
+                    log(' - flux     : KI-Overdrive aktivieren');
+                    log(' - nasa     : NASA Mainframe Infiltration');
                     log(' - destruct : System-Selbstzerstörung');
                     log(' - reboot   : Manueller System-Neustart');
                     log(' - clear    : Log-Speicher löschen');
@@ -203,7 +278,70 @@
                 case 'anarchy': document.getElementById('btn-anarchy').click(); break;
                 case 'bypass': document.getElementById('btn-security').click(); break;
                 case 'clear': logOutput.innerHTML = ''; break;
+                case 'trace':
+                    log('>> IP VERBINDUNG HERGESTELLT', 'info');
+                    log('>> TRACING ORIGIN NODE...', 'warn');
+                    setTimeout(() => {
+                        const fakeIp = Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255) + '.' + Math.floor(Math.random()*255);
+                        log('>> LOCATED: ' + fakeIp + ' (LATENCY 12ms)', 'ok');
+                        log('>> INITIATING GEO-MAPPING...', 'info');
+                        setTimeout(() => {
+                            const map = `\n       . _..::__:  ,-"-"._        |]       ,     _,.__\n  _.___ _ _<_>\`-._\`.   -.  \\       _-_\\.   __,-'   _ .\n  \`'."\`/\`   _     \`"     \`"       "    "    \`_,-' \n`;
+                            log('<pre style="font-size:10px;line-height:10px;color:#0f0;">' + map + '</pre>', 'ghost');
+                            log('>> TARGET ACQUIRED.', 'warn');
+                        }, 1000);
+                    }, 1500);
+                    break;
+                case 'ping':
+                    log('>> PINGING LOCALHOST...', 'info');
+                    let pcount = 0;
+                    const pTimer = setInterval(() => {
+                        pcount++;
+                        log(`64 bytes from 127.0.0.1: icmp_seq=${pcount} ttl=64 time=${Math.floor(Math.random()*5+1)} ms`, 'ghost');
+                        if (pcount >= 4) {
+                            clearInterval(pTimer);
+                            log('>> 4 packets transmitted, 4 received, 0% packet loss', 'ok');
+                        }
+                    }, 500);
+                    break;
+                case 'flux':
+                    log('>> ACTIVATING FLUX OVERDRIVE...', 'warn');
+                    if (typeof playKeyClick === 'function') playKeyClick();
+                    setTimeout(() => {
+                        const fluxAscii = `\n  _____ _    _   ___  __\n |  ___| |  | | | \\ \\/ /\n | |_  | |  | | | |\\  / \n |  _| | |__| |_| |/  \\ \n |_|   |_____\\___//_/\\_\\\n `;
+                        log('<pre style="font-size:12px;line-height:12px;color:#0f0;font-weight:bold;">' + fluxAscii + '</pre>', 'ok');
+                        log('>> FLUX AI ENGINE ONLINE.', 'info');
+                        log('>> SPEED: HASTIG. MODE: SCHWÄBISCH ACCELERATED.', 'crit');
+                    }, 500);
+                    break;
+                case 'nasa':
+                    log('>> ESTABLISHING SECURE UPLINK TO KENNEDY SPACE CENTER...', 'info');
+                    setTimeout(() => {
+                        log('>> BYPASSING FIREWALL [JPL-NODE-7]...', 'warn');
+                        if (typeof playKeyClick === 'function') playKeyClick();
+                        setTimeout(() => {
+                            log('>> ACCESSING VOYAGER TELEMETRY DATA...', 'ok');
+                            if (typeof playKeyClick === 'function') playKeyClick();
+                            let downloadProgress = 0;
+                            const downloadInterval = setInterval(() => {
+                                downloadProgress += Math.floor(Math.random() * 15) + 5;
+                                if (downloadProgress >= 100) {
+                                    downloadProgress = 100;
+                                    clearInterval(downloadInterval);
+                                    log(`>> DOWNLOADING CLASSIFIED FOLDERS [${downloadProgress}%]`, 'warn');
+                                    log('>> NASA MAINFRAME COMPROMISED. ALL SECRETS SECURED.', 'crit');
+                                    const asciiSat = `\n       .\n      / \\\n     /   \\\n    /_____\\\n    |     |\n   /|  O  |\\\n  / |_____| \\\n /  /     \\  \\`;
+                                    log('<pre style="font-size:10px;line-height:10px;color:#d4af37;">' + asciiSat + '</pre>', 'ghost');
+                                    if (typeof playErrorBeep === 'function') playErrorBeep();
+                                } else {
+                                    log(`>> DOWNLOADING CLASSIFIED FOLDERS [${downloadProgress}%]`, 'ghost');
+                                }
+                            }, 400);
+                        }, 1000);
+                    }, 1000);
+                    break;
                 case 'destruct': 
+                    playErrorBeep();
                     log('!! SELF-DESTRUCT PROTOCOL INITIATED !!', 'error');
                     let count = 5;
                     const timer = setInterval(() => {
@@ -219,7 +357,9 @@
                         }
                     }, 1000);
                     break;
-                default: log('FEHLER: BEFEHL "' + cmd + '" UNBEKANNT.', 'error');
+                default: 
+                    playErrorBeep();
+                    log('FEHLER: BEFEHL "' + cmd + '" UNBEKANNT.', 'error');
             }
         }
 
@@ -232,6 +372,40 @@
             });
         };
         setupBtn('btn-kernel', 'mode-kernel', '>> MATRIX AKTIVIERT', '>> MATRIX DEAKTIVIERT');
+
+        // Matrix Rain Canvas
+        const canvas = document.createElement('canvas');
+        canvas.id = 'matrix-canvas';
+        canvas.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;opacity:0;transition:opacity 1s;pointer-events:none;';
+        document.body.appendChild(canvas);
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+        const fontSize = 16;
+        let columns = Math.max(1, Math.floor(canvas.width / fontSize));
+        let drops = [];
+        for(let x = 0; x < columns; x++) drops[x] = 1;
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+            for(let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        document.getElementById('btn-kernel')?.addEventListener('click', () => {
+             canvas.style.opacity = document.body.classList.contains('mode-kernel') ? '0.35' : '0';
+             if(document.body.classList.contains('mode-kernel')) document.body.style.backgroundColor = 'transparent';
+        });
         setupBtn('btn-anarchy', 'mode-anarchy', '>> ANARCHIE ENGAGED', '>> ORDNUNG HERGESTELLT');
         setupBtn('btn-security', 'mode-security', '!! SECURITY BYPASS !!', '>> STABILIZED');
 
@@ -247,6 +421,26 @@
                     card.style.display = (filter === 'all' || cat === filter) ? 'flex' : 'none';
                 });
             });
+        });
+
+        // Konami / SASCHA Easter Egg
+        let secretBuffer = '';
+        document.addEventListener('keydown', (e) => {
+            if (document.activeElement === terminalInput) return;
+            secretBuffer += e.key.toLowerCase();
+            if (secretBuffer.length > 10) secretBuffer = secretBuffer.slice(-10);
+            if (secretBuffer.includes('sascha')) {
+                log('>> OVERLORD COMMAND OVERRIDE AUTHORIZED.', 'crit');
+                document.body.classList.add('mode-security');
+                if (!document.body.classList.contains('mode-kernel')) document.getElementById('btn-kernel').click();
+                const overlay = document.createElement('div');
+                overlay.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;z-index:9999;background:rgba(0,0,0,0.8);color:#0f0;display:flex;align-items:center;justify-content:center;font-size:3rem;font-family:monospace;pointer-events:none;';
+                overlay.innerHTML = '<h1 style="animation: shake 0.5s infinite;">GOD MODE UNLOCKED</h1>';
+                document.body.appendChild(overlay);
+                if (sfxEnabled) playErrorBeep();
+                setTimeout(() => document.body.removeChild(overlay), 4000);
+                secretBuffer = '';
+            }
         });
 
         log('>> SYSTEM READY. WAITING FOR COMMANDS...');
