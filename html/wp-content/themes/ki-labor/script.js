@@ -215,7 +215,11 @@
             }
         });
 
-        function executeCommand(cmd) {
+        function executeCommand(fullCmd) {
+            const parts = fullCmd.split(' ');
+            const cmd = parts[0];
+            const args = parts.slice(1).join(' ');
+
             switch(cmd) {
                 case 'help':
                     log('VERFÜGBARE PROTOKOLLE:', 'info');
@@ -232,6 +236,68 @@
                     log(' - destruct : System-Selbstzerstörung');
                     log(' - reboot   : Manueller System-Neustart');
                     log(' - clear    : Log-Speicher löschen');
+                    log(' - say      : Text-to-Speech Synthesizer');
+                    log(' - kind:    : Projekt-Filter (z.B. kind: all, kind: bash)');
+                    break;
+                case 'say':
+                    if (!args) {
+                        log('FEHLER: "say" ERWARTET EINE EINGABE.', 'error');
+                        break;
+                    }
+                    log('>> INITIALIZING VOCAL TRACT...', 'info');
+                    if ('speechSynthesis' in window) {
+                        document.body.classList.add('mode-ghost');
+                        const synthMsg = new SpeechSynthesisUtterance(args);
+                        synthMsg.rate = 0.8 + Math.random() * 0.4;
+                        synthMsg.pitch = 0.4 + Math.random() * 1.5;
+                        synthMsg.onend = function() {
+                            document.body.classList.remove('mode-ghost');
+                            log('>> VOCAL TRANSMISSION COMPLETE.', 'ok');
+                            if (sfxEnabled) playKeyClick();
+                        };
+                        synthMsg.onerror = function() {
+                            document.body.classList.remove('mode-ghost');
+                            log('!! VOCAL MODULE ERROR !!', 'error');
+                        };
+                        log('>> SYNTHESIZING: [ ' + args + ' ]', 'ghost');
+                        window.speechSynthesis.speak(synthMsg);
+                    } else {
+                        log('FEHLER: DEIN BROWSER UNTERSTÜTZT KEINE AUDIO-SYNTHESE.', 'error');
+                    }
+                    break;
+                case 'kind:':
+                    if (!args) {
+                        log('FEHLER: "kind:" ERWARTET EINEN FILTERWERT (Z.B. all, htmlkrabben, bash).', 'error');
+                        break;
+                    }
+                    const filterValue = args.toLowerCase();
+                    log('>> FILTERING DATABANKS BY CATEGORY: [' + filterValue + ']', 'info');
+                    
+                    let foundAny = false;
+                    projectCards.forEach(card => {
+                        const cat = card.getAttribute('data-category');
+                        if (filterValue === 'all' || cat === filterValue) {
+                            card.style.display = 'flex';
+                            foundAny = true;
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+
+                    filterButtons.forEach(b => {
+                        if (b.getAttribute('data-filter') === filterValue) {
+                            b.classList.add('active');
+                        } else {
+                            b.classList.remove('active');
+                        }
+                    });
+
+                    if (foundAny) {
+                        log('>> FILTER APPLIED GALAXY-WIDE.', 'ok');
+                    } else {
+                        log('WARNUNG: KEINE DATENSÄTZE FÜR KATEGORIE "' + filterValue + '" GEFUNDEN.', 'warn');
+                    }
+                    if (sfxEnabled) playKeyClick();
                     break;
                 case 'ghost':
                     if (document.body.classList.contains('mode-ghost')) {
@@ -443,6 +509,189 @@
             }
         });
 
+        // --- TIMELINE LOGIC ---
+        const steampunkCards = document.querySelectorAll('.steampunk-card');
+        const timelineModal = document.getElementById('timeline-modal');
+        const closeTimeline = document.getElementById('close-timeline');
+        const timelineTrack = document.getElementById('timeline-track');
+        const timelineTitle = document.getElementById('timeline-title');
+
+        if (steampunkCards.length > 0 && timelineModal) {
+            steampunkCards.forEach(card => {
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (typeof playErrorBeep === 'function') playErrorBeep();
+                    
+                    document.body.classList.add('mode-time-warp');
+                    log('>> INITIATING TEMPORAL DISPLACEMENT...', 'warn');
+                    log('>> TARGET YEAR: 1955', 'ghost');
+                    
+                    setTimeout(() => {
+                        document.body.classList.remove('mode-time-warp');
+                        const personName = card.querySelector('h3').innerText;
+                        timelineTitle.innerText = "HISTORISCHES ARCHIV: " + personName;
+                        generateTimeline();
+                        timelineModal.classList.remove('timeline-hidden');
+                        log('>> TEMPORAL SHIFT COMPLETE.', 'ok');
+                    }, 1200); 
+                });
+            });
+
+            if (closeTimeline) {
+                closeTimeline.addEventListener('click', () => {
+                    timelineModal.classList.add('timeline-hidden');
+                    if (typeof playKeyClick === 'function') playKeyClick();
+                });
+            }
+
+            function generateTimeline() {
+                timelineTrack.innerHTML = '';
+                
+                const specialEvents = {
+                    1974: "ARCHITEKTUR-UPDATE: Der zukünftige Overlord (Sascha) wird von der Kupfer-Matriarchin erfolgreich in die Biosphäre kompiliert. Initialer System-Schrei registriert.",
+                    1981: "SYSTEM-ERWEITERUNG: Ein neuer kybernetischer Bruder-Knoten geht online. Visuelles Sensoren-Update (Upload steht noch aus).",
+                    1983: "NETZWERK-UPDATE: AETHER-SIBLING V1.0 (Schwester Meli) bootet erfolgreich. Chaos-Protokolle und pneumatische Reflexe initialisiert."
+                };
+
+                const events = [
+                    "Kritische Dampfdruck-Anomalie entdeckt.",
+                    "Erster erfolgreicher Test des kybernetischen Herzmuskels.",
+                    "System-Absturz aufgrund von überhitzten Kupferspulen.",
+                    "Neural-Link mit den Primär-Vorläufern hergestellt.",
+                    "Mechanische Gliedmaßen rüsten auf Hydraulik um.",
+                    "Prototyp V2 entkommt aus dem Testlabor.",
+                    "Verhandlungen mit dem KI-Mainframe gescheitert.",
+                    "Flucht in die äußeren Kolonien (Offline-Modus).",
+                    "Reboot der emotionalen Sub-Parameter.",
+                    "Wartungsarbeiten an den Exo-Skeletten abgeschlossen."
+                ];
+
+                let yearsToRender = [];
+                for(let y = 1955; y <= new Date().getFullYear(); y += 5) {
+                    yearsToRender.push(y);
+                }
+                [1974, 1981, 1983].forEach(sy => {
+                    if(!yearsToRender.includes(sy)) yearsToRender.push(sy);
+                });
+                yearsToRender.sort((a,b) => a - b);
+
+                let isLeft = true;
+                
+                yearsToRender.forEach(year => {
+                    const node = document.createElement('div');
+                    node.className = 'time-node ' + (isLeft ? 'left' : 'right');
+                    
+                    const content = document.createElement('div');
+                    content.className = 'time-content';
+                    
+                    if(specialEvents[year]) {
+                        content.classList.add('omega-node');
+                        content.innerHTML = '<h3 style="color:var(--accent-orange);">[ ' + year + ' ]</h3><p style="color:#fff;"><strong>⚡ OMEGA-KLASSE EREIGNIS ⚡</strong><br>' + specialEvents[year] + '</p>';
+                    } else {
+                        const bgStory = events[Math.floor(Math.random() * events.length)];
+                        content.innerHTML = '<h3>[ ' + year + ' ]</h3><p>KRITISCHER EINTRAG #' + (Math.floor(Math.random()*9000)+1000) + ': ' + bgStory + ' Weitere Datenquellen als OMEGA-KLASSE klassifiziert.</p>';
+                    }
+                    
+                    node.appendChild(content);
+                    timelineTrack.appendChild(node);
+                    
+                    isLeft = !isLeft;
+                });
+            }
+        }
+
         log('>> SYSTEM READY. WAITING FOR COMMANDS...');
     });
 })();
+
+// --- ANTIGRAVITY ENGINE & GENERATIVE DRONE ---
+let droneAudioCtx;
+let droneInitialized = false;
+let droneShouldPlay = false;
+let mainDroneGain;
+
+function initDroneEngine() {
+    if (droneInitialized) return;
+    droneAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    
+    mainDroneGain = droneAudioCtx.createGain();
+    mainDroneGain.gain.setValueAtTime(0, droneAudioCtx.currentTime); // Start absolutely silent
+    mainDroneGain.connect(droneAudioCtx.destination);
+    
+    const filter = droneAudioCtx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(150, droneAudioCtx.currentTime);
+    filter.connect(mainDroneGain);
+    
+    const freqs = [55, 56.5, 82.5]; 
+    freqs.forEach(freq => {
+        const osc = droneAudioCtx.createOscillator();
+        const lfo = droneAudioCtx.createOscillator();
+        const lfoGain = droneAudioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(freq, droneAudioCtx.currentTime);
+        lfo.type = 'sine';
+        lfo.frequency.setValueAtTime(0.1 + (Math.random() * 0.1), droneAudioCtx.currentTime);
+        lfoGain.gain.setValueAtTime(3, droneAudioCtx.currentTime);
+        lfo.connect(lfoGain);
+        lfoGain.connect(osc.frequency);
+        osc.connect(filter);
+        osc.start(droneAudioCtx.currentTime);
+        lfo.start(droneAudioCtx.currentTime);
+    });
+    
+    droneInitialized = true;
+    console.log(">> GENERATIVE DRONE SYNTHESIZER PRE-LOADED.");
+    checkDroneState();
+}
+
+function checkDroneState() {
+    if (droneInitialized && droneShouldPlay && droneAudioCtx.state === 'running') {
+        const currTime = droneAudioCtx.currentTime;
+        // Chrome-safe volume ramping (tends to 0.15 exponentially)
+        mainDroneGain.gain.setTargetAtTime(0.15, currTime, 2.0);
+    }
+}
+
+// Master-Unlock für Chrome: Context MUSS während eines User-Gestures erstellt/resumed werden.
+const globalAudioUnlock = () => {
+    initDroneEngine();
+    if (droneAudioCtx && droneAudioCtx.state === 'suspended') {
+        droneAudioCtx.resume().then(() => checkDroneState());
+    } else {
+        checkDroneState();
+    }
+};
+
+document.addEventListener('click', globalAudioUnlock);
+document.addEventListener('keydown', globalAudioUnlock);
+
+function initAntigravity() {
+    const layers = document.querySelectorAll('.ag-parallax-layer');
+    let audioStarted = false;
+
+    window.addEventListener('scroll', () => {
+        // Trigger Drone Volume Ramp
+        if (!audioStarted && window.scrollY > 50) {
+            droneShouldPlay = true;
+            checkDroneState();
+            audioStarted = true;
+        }
+
+        // Parallax Effect
+        const scrolled = window.scrollY;
+        layers.forEach(layer => {
+            const speed = layer.getAttribute('data-speed') || 0.2;
+            const yPos = -(scrolled * speed);
+            layer.style.transform = `translateY(${yPos}px) translateZ(0)`;
+        });
+    });
+
+    // Add floating effect to terminal if present
+    const mainTerminal = document.getElementById('terminal-container');
+    if (mainTerminal) {
+        mainTerminal.classList.add('ag-floating');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', initAntigravity);

@@ -7,6 +7,10 @@
     <?php wp_head(); ?>
 </head>
 <body <?php body_class(); ?>>
+    <!-- ANTIGRAVITY PARALLAX LAYERS -->
+    <div class="ag-parallax-layer" data-speed="0.1" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-1; background: radial-gradient(circle, rgba(0,255,65,0.05) 0%, transparent 70%); pointer-events:none;"></div>
+    <div class="ag-parallax-layer" data-speed="0.3" style="position:fixed; top:0; left:0; width:100%; height:100%; z-index:-2; background: url('<?php echo get_template_directory_uri(); ?>/assets/img/grid.png'); opacity:0.1; pointer-events:none;"></div>
+
     <div id="boot-screen">
         <div id="boot-log"></div>
     </div>
@@ -53,12 +57,16 @@
                     <button class="filter-btn" data-filter="stable">STABIL</button>
                     <button class="filter-btn" data-filter="corrupted">KRITISCH</button>
                     <button class="filter-btn" data-filter="experimental">EXPERIMENTELL</button>
+                    <button class="steampunk-card filter-btn" style="color: var(--accent-gold); border-color: var(--accent-gold); padding: 2px 8px; background: transparent; cursor: pointer; display: flex; align-items: center;"><h3 style="margin: 0; font-size: 0.7rem;">MUTTER (TIMELINE)</h3></button>
                 </div>
             </div>
             
             <div class="portfolio-grid" id="main-grid">
                 
-                <?php if ( have_posts() ) : while ( have_posts() ) : the_post(); 
+                <?php 
+                $args = array('post_type' => 'post', 'posts_per_page' => -1, 'orderby' => 'date', 'order' => 'ASC');
+                $custom_query = new WP_Query($args);
+                if ( $custom_query->have_posts() ) : while ( $custom_query->have_posts() ) : $custom_query->the_post(); 
                     $status = get_post_meta(get_the_ID(), 'status_class', true) ?: 'stable';
                     $thumb = get_post_meta(get_the_ID(), 'project_thumb', true);
                 ?>
@@ -78,9 +86,17 @@
                             </div>
                         </div>
                     </a>
-                <?php endwhile; endif; ?>
+                <?php endwhile; wp_reset_postdata(); endif; ?>
 
             </div>
+        </div>
+
+
+        <!-- TIMELINE MODAL OVERLAY -->
+        <div id="timeline-modal" class="timeline-hidden">
+            <button id="close-timeline">[X] CLOSE</button>
+            <h2 id="timeline-title" style="text-align: center; color: var(--accent-orange); margin-top: 20px;">HISTORISCHES ARCHIV</h2>
+            <div id="timeline-track" class="timeline-track"></div>
         </div>
 
         <div class="content-box" style="margin-top: 20px; border-left-color: var(--accent-gold);">

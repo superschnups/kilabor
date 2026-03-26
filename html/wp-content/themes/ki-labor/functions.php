@@ -1,7 +1,13 @@
 <?php
 function ki_labor_scripts() {
-    wp_enqueue_style('ki-labor-style', get_stylesheet_uri());
+    $version = time();
+    wp_enqueue_style('ki-labor-style', get_stylesheet_uri(), array(), $version);
     wp_enqueue_script('ki-labor-script', get_template_directory_uri() . '/script.js', array(), '1.0', true);
+
+    // Pass theme URL to script.js
+    wp_localize_script('ki-labor-script', 'php_vars', array(
+        'theme_url' => get_template_directory_uri()
+    ));
 }
 add_action('wp_enqueue_scripts', 'ki_labor_scripts');
 
@@ -107,27 +113,31 @@ function ki_labor_init_content() {
         )
     );
 
-    foreach ($projects as $project) {
-        $existing_post = get_page_by_title($project['title'], OBJECT, 'post');
-        $post_data = array(
-            'post_title'   => $project['title'],
-            'post_content' => $project['content'],
-            'post_status'  => 'publish',
-            'post_author'  => 1,
-            'post_type'    => 'post'
-        );
+    $version = 'v5'; // Bump to trigger re-insert if needed
+    if (!get_option('ki_labor_content_gen_' . $version)) {
+        foreach ($projects as $project) {
+            $existing_post = get_page_by_title($project['title'], OBJECT, 'post');
+            $post_data = array(
+                'post_title'   => $project['title'],
+                'post_content' => $project['content'],
+                'post_status'  => 'publish',
+                'post_author'  => 1,
+                'post_type'    => 'post'
+            );
 
-        if ($existing_post) {
-            $post_data['ID'] = $existing_post->ID;
-            wp_update_post($post_data);
-            $post_id = $existing_post->ID;
-        } else {
-            $post_id = wp_insert_post($post_data);
+            if ($existing_post) {
+                $post_data['ID'] = $existing_post->ID;
+                wp_update_post($post_data);
+                $post_id = $existing_post->ID;
+            } else {
+                $post_id = wp_insert_post($post_data);
+            }
+            
+            update_post_meta($post_id, 'status_class', $project['status']);
+            update_post_meta($post_id, 'status_label', $project['label']);
+            update_post_meta($post_id, 'project_thumb', $project['thumb']);
         }
-        
-        update_post_meta($post_id, 'status_class', $project['status']);
-        update_post_meta($post_id, 'status_label', $project['label']);
-        update_post_meta($post_id, 'project_thumb', $project['thumb']);
+        update_option('ki_labor_content_gen_' . $version, true);
     }
 }
 add_action('init', 'ki_labor_init_content');

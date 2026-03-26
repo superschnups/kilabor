@@ -1,0 +1,19 @@
+#!/usr/bin/expect -f
+set timeout 15
+
+spawn ssh -o StrictHostKeyChecking=accept-new su72785@access-5019642512.webspace-host.com
+expect {
+    "*?assword:*" {
+        send "Jessilein@74\r"
+    }
+    timeout {
+        puts "Timeout waiting for password prompt"
+        exit 1
+    }
+}
+
+expect -re {[$#>] }
+send "find . -maxdepth 4 -name 'wp-content' -type d\r"
+
+expect -re {[$#>] }
+send "exit\r"
