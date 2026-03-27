@@ -765,6 +765,105 @@
         }
 
         log('>> SYSTEM READY. WAITING FOR COMMANDS...');
+
+        // --- OPS DASHBOARD ---
+        const opsDashSign   = document.getElementById('ops-dashboard-sign');
+        const opsPanel      = document.getElementById('ops-panel');
+        const opsPanelLog   = document.getElementById('ops-panel-log');
+        const opsPanelVital = document.getElementById('ops-panel-vitals');
+        const terminalWrap  = document.querySelector('.terminal-wrapper');
+        let opsOpen = false;
+        let opsTyped = false;
+        let vitalInterval = null;
+
+        const OPS_LOG_LINES = [
+            { t: '╔══════════════════════════════════════════════════╗', cls: 'ops-line-dim' },
+            { t: '║   CHIRURGISCHES PROTOKOLL — KLASSIFIZIERT: ROT   ║', cls: 'ops-line-section' },
+            { t: '╚══════════════════════════════════════════════════╝', cls: 'ops-line-dim' },
+            { t: '', cls: '' },
+            { t: '─── OP ALFA-7 ─────────────────────────────────────', cls: 'ops-line-section' },
+            { t: '  PATIENT  : KREATIVITAET.exe (v4.2-beta)', cls: 'ops-line-label' },
+            { t: '  EINGRIFF : Herz-Transplant — Donor: MOTIVATION.sys', cls: '' },
+            { t: '  BEFUND   : Herz läuft. Richtung unbekannt. Absicht fraglich.', cls: '' },
+            { t: '  STATUS   : ████████░░  82% KAPAZITÄT', cls: 'ops-line-ok' },
+            { t: '  ERGEBNIS : 0.5 ERFOLGE  (zählt als halber Sieg, ganz nach Wunsch)', cls: 'ops-line-label' },
+            { t: '', cls: '' },
+            { t: '─── OP BETA-12 ─────────────────────────────────────', cls: 'ops-line-section' },
+            { t: '  PATIENT  : SCHLAFRHYTHMUS.daemon (Version: veraltet)', cls: 'ops-line-label' },
+            { t: '  EINGRIFF : Herz-Transplant — Donor: KAFFEE-KERN v9.1', cls: '' },
+            { t: '  BEFUND   : Donor inkompatibel. Koffein ≠ Blut. Überraschung: keiner.', cls: '' },
+            { t: '  STATUS   : ██████████  100% — ABGESCHLOSSEN', cls: 'ops-line-crit' },
+            { t: '  ERGEBNIS : TECHNISCH FEHLGESCHLAGEN. Patient läuft trotzdem.', cls: 'ops-line-label' },
+            { t: '', cls: '' },
+            { t: '════════════════════════════════════════════════════', cls: 'ops-line-dim' },
+            { t: '  OPS: |||  3    ERFOLGE: |½  1.5    FEHLSCHL: |½  1.5', cls: 'ops-line-section' },
+            { t: '  RESTE: KUEHLHAUS C — ZUSTAND: STABIL / NUTZBAR', cls: 'ops-line-crit' },
+            { t: '  NÄCHSTE OP: PROKRASTINATION.exe — ETA: IRGENDWANN', cls: 'ops-line-dim' },
+            { t: '════════════════════════════════════════════════════', cls: 'ops-line-dim' },
+        ];
+
+        const VITAL_FRAMES = [
+            'VITALMONITOR  ▁▂▃▂▁▃▂▁▁▁▁▁▁▁▁▁▁▁▁▁  FLATLINE',
+            'VITALMONITOR  ▁▁▂▃▂▁▃▂▁▁▁▁▁▁▁▁▁▁▁▁  FLATLINE',
+            'VITALMONITOR  ▁▁▁▂▃▂▁▃▂▁▁▁▁▁▁▁▁▁▁▁  FLATLINE',
+            'VITALMONITOR  ▁▁▁▁▂▃▂▁▃▂▁▁▁▁▁▁▁▁▁▁  FLATLINE',
+            'VITALMONITOR  ▁▁▁▁▁▂▃▂▁▁▁▂▃▂▁▁▁▁▁▁  FLATLINE',
+            'VITALMONITOR  ▁▁▁▁▁▁▂▃▂▁▁▁▁▂▃▂▁▁▁▁  FLATLINE',
+            'VITALMONITOR  ▁▁▁▁▁▁▁▂▃▂▁▁▁▁▁▂▃▂▁▁  FLATLINE',
+            'VITALMONITOR  ▁▁▁▁▁▁▁▁▂▃▂▁▁▁▁▁▁▁▁▁  FLATLINE',
+        ];
+
+        function typeOpsLog() {
+            if (opsTyped) return;
+            opsTyped = true;
+            opsPanelLog.innerHTML = '';
+            let i = 0;
+            function typeLine() {
+                if (i >= OPS_LOG_LINES.length) return;
+                const { t, cls } = OPS_LOG_LINES[i++];
+                const span = document.createElement('span');
+                if (cls) span.className = cls;
+                span.textContent = t + '\n';
+                opsPanelLog.appendChild(span);
+                opsPanelLog.scrollTop = opsPanelLog.scrollHeight;
+                setTimeout(typeLine, t === '' ? 30 : 55);
+            }
+            typeLine();
+        }
+
+        function startVitals() {
+            let frame = 0;
+            opsPanelVital.textContent = VITAL_FRAMES[0];
+            vitalInterval = setInterval(() => {
+                frame = (frame + 1) % VITAL_FRAMES.length;
+                opsPanelVital.textContent = VITAL_FRAMES[frame];
+            }, 220);
+        }
+
+        function stopVitals() {
+            clearInterval(vitalInterval);
+            vitalInterval = null;
+        }
+
+        if (opsDashSign) {
+            opsDashSign.addEventListener('click', () => {
+                opsOpen = !opsOpen;
+                if (opsOpen) {
+                    opsPanel.classList.add('ops-open');
+                    terminalWrap.classList.add('ops-expanded');
+                    opsDashSign.querySelector('.ops-sign-hint').textContent = '[ PROTOKOLL SCHLIESSEN ]';
+                    startVitals();
+                    setTimeout(typeOpsLog, 300);
+                    if (typeof playKeyClick === 'function') playKeyClick();
+                } else {
+                    opsPanel.classList.remove('ops-open');
+                    terminalWrap.classList.remove('ops-expanded');
+                    opsDashSign.querySelector('.ops-sign-hint').textContent = '[ PROTOKOLL EINSEHEN ]';
+                    stopVitals();
+                }
+            });
+        }
+
     });
 })();
 

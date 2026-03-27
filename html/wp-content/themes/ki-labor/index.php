@@ -35,12 +35,44 @@
             <button id="btn-security" class="switch-btn">SECURITY-BYPASS</button>
         </div>
 
-        <div class="terminal-wrapper" style="margin-top: 30px;">
+        <!-- OPS DASHBOARD SIGN -->
+        <div id="ops-dashboard-sign">
+            <div class="ops-sign-header">
+                <span class="ops-blink-dot"></span>
+                <span class="ops-title">CHIRURGISCHES OPS-DASHBOARD</span>
+                <span class="ops-blink-dot"></span>
+            </div>
+            <div class="ops-sign-stats">
+                <div class="ops-stat-block">
+                    <span class="ops-stat-label">HEUTE</span>
+                    <span class="ops-tally">|||</span>
+                    <span class="ops-stat-val">3 OPS</span>
+                </div>
+                <span class="ops-divider">◈</span>
+                <div class="ops-stat-block">
+                    <span class="ops-stat-label">ERFOLGE</span>
+                    <span class="ops-tally ops-half">|½</span>
+                    <span class="ops-stat-val ops-warn">1.5</span>
+                </div>
+                <span class="ops-divider">◈</span>
+                <div class="ops-stat-block">
+                    <span class="ops-stat-label">RESTE</span>
+                    <span class="ops-stat-val ops-crit">KUEHLHAUS C</span>
+                </div>
+            </div>
+            <div class="ops-sign-hint">[ PROTOKOLL EINSEHEN ]</div>
+        </div>
+
+        <div class="terminal-wrapper" style="margin-top: 0;">
             <div class="terminal-topbar" style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 5px;">
                 <span style="color: var(--accent-gold); font-size: 0.8rem; letter-spacing: 1px;">// SECURE_TERMINAL_ACCESS</span>
                 <button id="btn-sfx" style="background: transparent; border: 1px solid #0f0; color: #0f0; font-family: 'Courier New', monospace; font-size: 0.7rem; cursor: pointer; padding: 2px 8px; transition: all 0.2s;">[ SFX: ON ]</button>
             </div>
             <div id="system-log" style="margin-top: 0;">
+                <div id="ops-panel">
+                    <div id="ops-panel-vitals"></div>
+                    <div id="ops-panel-log"></div>
+                </div>
                 <div id="log-output"></div>
                 <div class="terminal-input-line">
                     <span class="prompt">></span>
@@ -134,6 +166,17 @@
         <div id="timeline-modal" class="timeline-hidden">
             <button id="close-timeline">[X] CLOSE</button>
             <h2 id="timeline-title" style="text-align: center; color: var(--accent-orange); margin-top: 20px;">HISTORISCHES ARCHIV</h2>
+            <div class="mutter-portrait-wrap">
+                <div class="mutter-mirror-frame">
+                    <div class="mutter-mirror-inner">
+                        <span class="mutter-mirror-deco top">⚙</span>
+                        <span class="mutter-mirror-deco bottom">⚙</span>
+                        <span class="mutter-mirror-deco left">⚙</span>
+                        <span class="mutter-mirror-deco right">⚙</span>
+                        <img src="<?php echo get_template_directory_uri(); ?>/assets/img/hp_muti_steampunk_02.jpg" alt="Die Matriarchin" class="mutter-mirror-img">
+                    </div>
+                </div>
+            </div>
             <div id="timeline-track" class="timeline-track"></div>
         </div>
 
