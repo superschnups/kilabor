@@ -49,6 +49,44 @@
             </div>
         </div>
 
+        <!-- FORTUNE TEASER -->
+        <div class="fortune-teaser" onclick="document.getElementById('terminal-input').value='fortune'; document.getElementById('terminal-input').focus();">
+            <span class="fortune-teaser-label">// ORAKEL-SCHNITTSTELLE ERKANNT</span>
+            <p class="fortune-teaser-text">Das System verfügt über eine interne Weisheitsdatenbank. Zugriffsklassifizierung: <em>möglicherweise erhellend</em>. Nutzung auf eigene Gefahr. Keine Haftung für plötzliche Selbsterkenntnis.</p>
+            <span class="fortune-teaser-hint">&gt; <code>fortune</code> &nbsp;—&nbsp; falls du es wagen willst.</span>
+        </div>
+
+        <!-- TERMINAL COMMAND CARDS -->
+        <div class="cmd-cards-section">
+            <div class="cmd-card">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/hero_07.png" class="cmd-card-img" alt="Weather Scan">
+                <div class="cmd-card-body">
+                    <span class="cmd-card-label">[ PROTOKOLL #001 ]</span>
+                    <h3 class="cmd-card-title">&gt; weather</h3>
+                    <p class="cmd-card-text">Das Wetter? Irrelevant. Was zählt ist der Chaos-Level in deinen Schaltkreisen. Dieser Scanner analysiert atmosphärische Destabilisierung, Koffein-Sättigung und die Wahrscheinlichkeit eines kreativen Ausbruchs. Meteorologen hassen diesen Trick.</p>
+                    <span class="cmd-card-hint">Eingabe im Terminal: <code>weather</code></span>
+                </div>
+            </div>
+            <div class="cmd-card">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/hp_muti_steampunk_01.png" class="cmd-card-img" alt="System Top">
+                <div class="cmd-card-body">
+                    <span class="cmd-card-label">[ PROTOKOLL #002 ]</span>
+                    <h3 class="cmd-card-title">&gt; top</h3>
+                    <p class="cmd-card-text">Welche dämonischen Prozesse laufen gerade im Hintergrund? KREATIVITAET.exe frisst 94% CPU. PROKRASTINATION.app wurde erfolgreich suspendiert. SELBSTZWEIFEL.exe ist – endlich – terminiert. Ein Blick in den Maschinenraum des Overlords.</p>
+                    <span class="cmd-card-hint">Eingabe im Terminal: <code>top</code></span>
+                </div>
+            </div>
+            <div class="cmd-card">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/hp_vater_steampunk_01.jpg" class="cmd-card-img" alt="System Uptime">
+                <div class="cmd-card-body">
+                    <span class="cmd-card-label">[ PROTOKOLL #003 ]</span>
+                    <h3 class="cmd-card-title">&gt; uptime</h3>
+                    <p class="cmd-card-text">Das System läuft seit 1974. Ungeplant. Ohne Handbuch. Mit minimaler Wartung und maximalem Kaffee-Input. Aktuelle Laufzeit in Tagen, Stunden, Minuten – live berechnet. Stabilität: unberechenbar. Status: noch online. Irgendwie.</p>
+                    <span class="cmd-card-hint">Eingabe im Terminal: <code>uptime</code></span>
+                </div>
+            </div>
+        </div>
+
         <div class="content-box">
             <div class="content-header">
                 <h2>PROJEKT-ARCHIV: KLASSIFIZIERT</h2>

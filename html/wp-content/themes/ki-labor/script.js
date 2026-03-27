@@ -203,13 +203,36 @@
             });
         }
 
+        const cmdHistory = [];
+        let historyIndex = -1;
+
         terminalInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
                 playKeyClick();
                 const command = this.value.toLowerCase().trim();
+                if (command) {
+                    cmdHistory.unshift(command);
+                    if (cmdHistory.length > 50) cmdHistory.pop();
+                }
+                historyIndex = -1;
                 log('> ' + command, 'user-cmd');
                 this.value = '';
                 executeCommand(command);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (historyIndex < cmdHistory.length - 1) {
+                    historyIndex++;
+                    this.value = cmdHistory[historyIndex];
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (historyIndex > 0) {
+                    historyIndex--;
+                    this.value = cmdHistory[historyIndex];
+                } else {
+                    historyIndex = -1;
+                    this.value = '';
+                }
             } else if (e.key.length === 1 || e.key === 'Backspace' || e.key === 'Tab') {
                 playKeyClick();
             }
@@ -238,6 +261,11 @@
                     log(' - clear    : Log-Speicher löschen');
                     log(' - say      : Text-to-Speech Synthesizer');
                     log(' - kind:    : Projekt-Filter (z.B. kind: all, kind: bash)');
+                    log(' - weather  : Atmosphärischer System-Scan');
+                    log(' - top      : Aktive Prozesse anzeigen');
+                    log(' - uptime   : System-Laufzeit berechnen');
+                    log(' - fortune  : Orakel des Overlords befragen');
+                    log(' - brew     : Pakete installieren (z.B. brew install ghostty)');
                     break;
                 case 'say':
                     if (!args) {
@@ -423,7 +451,134 @@
                         }
                     }, 1000);
                     break;
-                default: 
+                case 'weather':
+                    log('>> ATMOSPHERIC SCAN INITIATED...', 'warn');
+                    setTimeout(() => {
+                        const conditions = ['KREATIVES CHAOS', 'DIGITALER NEBEL', 'ANARCHIE-FRONT NÄHERT SICH', 'ELEKTRISCHE UNRUHE', 'IDEENSTURM STUFE 3'];
+                        const temps = [Math.floor(Math.random()*15)+10];
+                        const chaos = ['LOW', 'MODERATE', 'CRITICAL', 'MAXIMUM', 'OFF THE CHARTS'];
+                        const humidity = ['KOFFEIN', 'NOSTALGIE', 'ZUKUNFTSANGST', 'KREATIVENERGIE'];
+                        log('╔══════════════════════════════════╗', 'info');
+                        log('║  WETTERSTATION KI-LABOR          ║', 'info');
+                        log('╠══════════════════════════════════╣', 'info');
+                        log('  STANDORT  : OVERLORD-BUNKER NORD', 'ok');
+                        log('  TEMP      : ' + temps[0] + '°C (GEFÜHLT: INTENSIV)', 'ok');
+                        log('  ZUSTAND   : ' + conditions[Math.floor(Math.random()*conditions.length)], 'warn');
+                        log('  CHAOS-LVL : ' + chaos[Math.floor(Math.random()*chaos.length)], 'error');
+                        log('  LUFTFEUCHTE: ' + humidity[Math.floor(Math.random()*humidity.length)] + ' 84%', 'ok');
+                        log('  PROGNOSE  : PROJEKT-OUTPUT WAHRSCHEINLICH', 'ok');
+                        log('╚══════════════════════════════════╝', 'info');
+                    }, 800);
+                    break;
+
+                case 'top':
+                    log('>> SYSTEM-MONITOR AKTIV (q zum Beenden)', 'warn');
+                    setTimeout(() => {
+                        log('╔══════════════════════════════════════════════╗', 'info');
+                        log('║  PID   PROZESS                CPU    MEM     ║', 'info');
+                        log('╠══════════════════════════════════════════════╣', 'info');
+                        log('  001   KREATIVITAET.exe        94%    HIGH', 'ok');
+                        log('  002   KAFFEE-DAEMON            3%    KRITISCH', 'warn');
+                        log('  003   ANARCHIE-KERNEL         12%    STABIL', 'ok');
+                        log('  004   PROKRASTINATION.app      0%    SUSPENDIERT', 'info');
+                        log('  005   IDEEN-BUFFER            67%    OVERFLOW', 'warn');
+                        log('  006   SOCIAL-MEDIA-BLOCKER    99%    AKTIV', 'ok');
+                        log('  007   MUSIK-SYNTHESIZER       31%    RUNNING', 'ok');
+                        log('  008   SELBSTZWEIFEL.exe        0%    TERMINATED', 'error');
+                        log('  009   ZUKUNFT-PLANER          42%    IDLE', 'info');
+                        log('  010   KINDER-CHAOS-MGR        88%    ESKALIERT', 'warn');
+                        log('╚══════════════════════════════════════════════╝', 'info');
+                    }, 600);
+                    break;
+
+                case 'uptime':
+                    log('>> SYSTEM-LAUFZEIT WIRD BERECHNET...', 'warn');
+                    setTimeout(() => {
+                        const boot = new Date(1974, 0, 1);
+                        const now = new Date();
+                        const ms = now - boot;
+                        const days = Math.floor(ms / (1000 * 60 * 60 * 24));
+                        const years = Math.floor(days / 365);
+                        const hours = Math.floor((ms / (1000 * 60 * 60)) % 24);
+                        const minutes = Math.floor((ms / (1000 * 60)) % 60);
+                        log('╔══════════════════════════════════════╗', 'info');
+                        log('║  SYSTEM: SASCHA RODE  v' + years + '.0          ║', 'info');
+                        log('╠══════════════════════════════════════╣', 'info');
+                        log('  BOOT-DATUM : 01.01.1974', 'ok');
+                        log('  LAUFZEIT   : ' + days.toLocaleString('de-DE') + ' TAGE', 'ok');
+                        log('             : ' + years + ' JAHRE, ' + hours + ' STD, ' + minutes + ' MIN', 'ok');
+                        log('  STABILITÄT : UNBERECHENBAR', 'warn');
+                        log('  UPDATES    : LAUFEND (MANUELL)', 'ok');
+                        log('  KERNEL     : KREATIV-ANARCHIE 4.0', 'ok');
+                        log('  STATUS     : NOCH ONLINE. IRGENDWIE.', 'crit');
+                        log('╚══════════════════════════════════════╝', 'info');
+                    }, 900);
+                    break;
+
+                case 'fortune':
+                    const fortunes = [
+                        'Die Hälfte der Intelligenz besteht darin zu wissen, was man ignorieren kann.',
+                        'Wer früh aufsteht, hat mehr Zeit sich zu fragen warum.',
+                        'Kreativität ist Intelligenz, die Spaß hat. Spaß ist Anarchie, die sich gut anfühlt.',
+                        'Das Internet vergisst nichts. Dein Gehirn alles. Equilibrium.',
+                        'Wenn Plan A scheitert – gut. Plan A war sowieso zu ordentlich.',
+                        'Der Unterschied zwischen Genie und Wahnsinn ist ein funktionierender Deploy.',
+                        'Vertrauen ist gut. Versionskontrolle ist besser.',
+                        'Die Stille vor dem Commit ist die ehrlichste Form der Angst.',
+                        'Jeder hat einen Plan bis der erste User die Seite öffnet.',
+                        'Was nicht dokumentiert ist, war nie wirklich real.',
+                        'Kaffee ist nur Debugging auf chemischer Ebene.',
+                        'Ein leeres Terminal-Fenster ist Zen in seiner reinsten Form.',
+                        'Wer keine Fehler macht, macht nichts. Wer alles macht, macht Fehler. Conclusio: Mach alles.',
+                        'Die Wahrheit liegt im Source-Code. Die Lüge im Kommentar daneben.',
+                    ];
+                    log('>> WEISHEITS-GENERATOR AKTIV...', 'warn');
+                    setTimeout(() => {
+                        const f = fortunes[Math.floor(Math.random() * fortunes.length)];
+                        log('╔══════════════════════════════════════════╗', 'info');
+                        log('║  ORAKEL-AUSGABE #' + (Math.floor(Math.random()*9000)+1000) + '               ║', 'info');
+                        log('╠══════════════════════════════════════════╣', 'info');
+                        log('  "' + f + '"', 'crit');
+                        log('╚══════════════════════════════════════════╝', 'info');
+                        log('  -- QUELLE: DIGITALES ORAKEL DES OVERLORDS', 'info');
+                    }, 500);
+                    break;
+
+                case 'brew':
+                    if (args && args.toLowerCase().includes('install')) {
+                        const pkg = args.replace(/install\s*/i, '').trim() || 'chaos-engine';
+                        log('>> brew install ' + pkg, 'warn');
+                        log('==> Fetching ' + pkg + '...', 'info');
+                        let progress = 0;
+                        const bar = setInterval(() => {
+                            progress += Math.floor(Math.random() * 18) + 5;
+                            if (progress >= 100) {
+                                progress = 100;
+                                clearInterval(bar);
+                                log('[####################] 100%', 'ok');
+                                setTimeout(() => {
+                                    log('==> Installing ' + pkg + '...', 'info');
+                                    setTimeout(() => {
+                                        log('==> Linking...', 'info');
+                                        setTimeout(() => {
+                                            log('✓ ' + pkg + ' ' + (Math.floor(Math.random()*9)+1) + '.' + (Math.floor(Math.random()*9)) + '.' + (Math.floor(Math.random()*9)) + ' installed.', 'ok');
+                                            log('  Warning: ' + pkg + ' contains traces of digital anarchie.', 'warn');
+                                            log('  Recommendation: Reboot universe before use.', 'info');
+                                        }, 600);
+                                    }, 400);
+                                }, 300);
+                            } else {
+                                const filled = Math.floor(progress / 5);
+                                const bar_str = '[' + '#'.repeat(filled) + '-'.repeat(20-filled) + '] ' + progress + '%';
+                                log(bar_str, 'info');
+                            }
+                        }, 250);
+                    } else {
+                        log('FEHLER: Verwendung: brew install <paketname>', 'error');
+                    }
+                    break;
+
+                default:
                     playErrorBeep();
                     log('FEHLER: BEFEHL "' + cmd + '" UNBEKANNT.', 'error');
             }
@@ -586,10 +741,19 @@
                     
                     if(specialEvents[year]) {
                         content.classList.add('omega-node');
-                        content.innerHTML = '<h3 style="color:var(--accent-orange);">[ ' + year + ' ]</h3><p style="color:#fff;"><strong>⚡ OMEGA-KLASSE EREIGNIS ⚡</strong><br>' + specialEvents[year] + '</p>';
+                        content.innerHTML =
+                            '<div class="tc-header">OMEGA-KLASSE &nbsp;&#9670;&nbsp; <span class="tc-stamp omega">!! FREIGEGEBEN !!</span></div>' +
+                            '<h3>[ ' + year + ' ]</h3>' +
+                            '<p><strong>⚡ KRITISCHES SYSTEMEREIGNIS ⚡</strong><br>' + specialEvents[year] + '</p>' +
+                            '<div class="tc-footer">QUELLE: ARCHIV-SEKTOR 7 &nbsp;&#9670;&nbsp; ZUGRIFF: OVERLORD ONLY</div>';
                     } else {
                         const bgStory = events[Math.floor(Math.random() * events.length)];
-                        content.innerHTML = '<h3>[ ' + year + ' ]</h3><p>KRITISCHER EINTRAG #' + (Math.floor(Math.random()*9000)+1000) + ': ' + bgStory + ' Weitere Datenquellen als OMEGA-KLASSE klassifiziert.</p>';
+                        const akteNr = Math.floor(Math.random()*9000)+1000;
+                        content.innerHTML =
+                            '<div class="tc-header">AKTE #' + akteNr + ' &nbsp;&#9670;&nbsp; <span class="tc-stamp">KLASSIFIZIERT</span></div>' +
+                            '<h3>[ ' + year + ' ]</h3>' +
+                            '<p>' + bgStory + ' Weitere Datenquellen als OMEGA-KLASSE klassifiziert.</p>' +
+                            '<div class="tc-footer">ZEITSTEMPEL: ' + year + '.01.01 &nbsp;&#9670;&nbsp; INTEGRITAET: FRAGLICH</div>';
                     }
                     
                     node.appendChild(content);

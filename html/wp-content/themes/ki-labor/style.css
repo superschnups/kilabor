@@ -448,6 +448,143 @@ body.mode-anarchy .hero-image {
     text-decoration: none !important;
 }
 
+/* FORTUNE TEASER */
+.fortune-teaser {
+    margin-top: 16px;
+    padding: 18px 24px;
+    border: 1px solid #2a2a2a;
+    border-left: 3px solid var(--accent-gold);
+    background: rgba(212, 175, 55, 0.03);
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.fortune-teaser:hover {
+    background: rgba(212, 175, 55, 0.07);
+    border-left-color: var(--accent-orange);
+}
+
+.fortune-teaser-label {
+    color: #444;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.fortune-teaser-text {
+    color: #777;
+    font-size: 0.8rem;
+    margin: 0;
+    flex: 1;
+    line-height: 1.5;
+}
+
+.fortune-teaser-text em {
+    color: var(--accent-gold);
+    font-style: normal;
+}
+
+.fortune-teaser-hint {
+    color: #444;
+    font-size: 0.75rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.fortune-teaser-hint code {
+    color: var(--accent-gold);
+    font-family: 'Courier New', monospace;
+}
+
+/* COMMAND CARDS */
+.cmd-cards-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+}
+
+.cmd-card {
+    background: rgba(15, 15, 15, 0.9);
+    border: 1px solid #333;
+    border-top: 3px solid var(--accent-orange);
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.cmd-card:hover {
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.25);
+}
+
+.cmd-card-img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    object-position: top;
+    filter: sepia(0.4) brightness(0.7);
+    display: block;
+}
+
+.cmd-card-body {
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.cmd-card-label {
+    color: #555;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+}
+
+.cmd-card-title {
+    color: var(--accent-orange);
+    font-size: 1.1rem;
+    margin: 0;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+.cmd-card-text {
+    color: #aaa;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    margin: 0;
+    flex: 1;
+}
+
+.cmd-card-hint {
+    display: block;
+    color: #444;
+    font-size: 0.7rem;
+    border-top: 1px solid #222;
+    padding-top: 10px;
+    margin-top: 4px;
+    letter-spacing: 1px;
+}
+
+.cmd-card-hint code {
+    color: #0f0;
+    background: rgba(0,255,0,0.05);
+    padding: 1px 5px;
+    font-family: 'Courier New', monospace;
+}
+
+@media (max-width: 768px) {
+    .cmd-cards-section {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* PORTFOLIO GRID */
 .portfolio-grid {
     display: grid;
@@ -632,13 +769,54 @@ body.mode-anarchy .hero-image {
     opacity: 0.8;
 }
 
-.time-content h3 { 
-    margin-top: 0; color: #d4af37; 
-    border-bottom: 1px dashed #b5a642; 
-    padding-bottom: 5px; 
+.time-content h3 {
+    margin-top: 8px; color: #d4af37;
+    border-bottom: 1px dashed #b5a642;
+    padding-bottom: 5px;
     text-shadow: 1px 1px 2px #000;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
 }
-.time-content p { font-size: 0.9rem; color: #e8dcc4; line-height: 1.5; text-shadow: 1px 1px 2px #000; }
+.time-content p { font-size: 0.9rem; color: #e8dcc4; line-height: 1.5; text-shadow: 1px 1px 2px #000; margin-bottom: 0; }
+
+/* Akte-Kopfstreifen */
+.tc-header {
+    margin: -25px -25px 12px -25px;
+    padding: 5px 14px;
+    background: linear-gradient(90deg, rgba(181,166,66,0.15), rgba(181,166,66,0.05));
+    border-bottom: 1px solid #b5a642;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: #8a7a30;
+    text-transform: uppercase;
+}
+
+.tc-stamp {
+    color: #b5a642;
+    border: 1px solid #b5a642;
+    padding: 0 5px;
+    font-size: 0.55rem;
+    letter-spacing: 3px;
+    vertical-align: middle;
+}
+
+.tc-stamp.omega {
+    color: var(--accent-orange);
+    border-color: var(--accent-orange);
+    animation: blinker 1.2s infinite;
+}
+
+/* Akte-Fußstreifen */
+.tc-footer {
+    margin: 12px -25px -25px -25px;
+    padding: 5px 14px;
+    background: linear-gradient(90deg, rgba(181,166,66,0.05), rgba(181,166,66,0.12));
+    border-top: 1px solid #3a2e10;
+    font-size: 0.55rem;
+    letter-spacing: 2px;
+    color: #5a4e20;
+    text-transform: uppercase;
+}
 
 /* OMEGA KNOTEN - Die Überraschung (Elektro-Arc) */
 .time-content.omega-node {
