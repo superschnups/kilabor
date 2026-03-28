@@ -627,8 +627,10 @@
              canvas.style.opacity = document.body.classList.contains('mode-kernel') ? '0.35' : '0';
              if(document.body.classList.contains('mode-kernel')) document.body.style.backgroundColor = 'transparent';
         });
-        setupBtn('btn-anarchy', 'mode-anarchy', '>> ANARCHIE ENGAGED', '>> ORDNUNG HERGESTELLT');
-        setupBtn('btn-security', 'mode-security', '!! SECURITY BYPASS !!', '>> STABILIZED');
+        setupBtn('btn-anarchy',   'mode-anarchy',   '>> ANARCHIE ENGAGED',              '>> ORDNUNG HERGESTELLT');
+        setupBtn('btn-security',  'mode-security',  '!! SECURITY BYPASS !!',            '>> STABILIZED');
+        setupBtn('btn-scan',      'mode-scan',      '>> DEEP SCAN INITIIERT — LÄUFT',   '>> SCAN ABGEBROCHEN');
+        setupBtn('btn-overdrive', 'mode-overdrive', '!! OVERDRIVE ENGAGED — INSTABIL',  '>> OVERDRIVE DEAKTIVIERT');
 
         // Filter Logic
         filterButtons.forEach(btn => {
@@ -764,6 +766,53 @@
             }
         }
 
+        // --- GÄSTEBUCH ---
+        const gbSubmit    = document.getElementById('gb-submit');
+        const gbInputUser = document.getElementById('gb-input-user');
+        const gbInputMsg  = document.getElementById('gb-input-msg');
+        const gbEntries   = document.getElementById('gaestebuch-entries');
+
+        const GB_TAGS = [
+            ['STATUS: EINGETROFFEN', ''],
+            ['IDENTITAET: UNGEKLAERT', ''],
+            ['HERKUNFT: FRAGLICH', 'gb-tag-warn'],
+            ['KLASSIFIZIERT: UNBEKANNT', 'gb-tag-crit'],
+            ['INTEGRITAET: AKZEPTABEL', 'gb-tag-ok'],
+            ['SIGNAL: SCHWACH', 'gb-tag-warn'],
+            ['PROZESS: LÄUFT', 'gb-tag-ok'],
+            ['GEFAEHRLICHKEIT: MITTEL', 'gb-tag-crit'],
+        ];
+
+        if (gbSubmit) {
+            gbSubmit.addEventListener('click', () => {
+                const user = gbInputUser.value.trim() || 'ANONYMOUS_' + Math.floor(Math.random()*9000+1000);
+                const msg  = gbInputMsg.value.trim();
+                if (!msg) { gbInputMsg.focus(); return; }
+
+                const now  = new Date();
+                const date = now.toLocaleDateString('de-DE') + ' — ' +
+                             String(now.getHours()).padStart(2,'0') + ':' +
+                             String(now.getMinutes()).padStart(2,'0');
+                const [tagLabel, tagCls] = GB_TAGS[Math.floor(Math.random() * GB_TAGS.length)];
+
+                const entry = document.createElement('div');
+                entry.className = 'gb-entry gb-new';
+                entry.innerHTML =
+                    '<div class="gb-meta">' +
+                        '<span class="gb-user">' + user.toUpperCase().replace(/</g,'&lt;').slice(0,40) + '</span>' +
+                        '<span class="gb-dot">◆</span>' +
+                        '<span class="gb-date">' + date + '</span>' +
+                        '<span class="gb-tag ' + tagCls + '">' + tagLabel + '</span>' +
+                    '</div>' +
+                    '<p class="gb-text">' + msg.replace(/</g,'&lt;').replace(/>/g,'&gt;') + '</p>';
+
+                gbEntries.insertBefore(entry, gbEntries.firstChild);
+                gbInputUser.value = '';
+                gbInputMsg.value  = '';
+                if (typeof playKeyClick === 'function') playKeyClick();
+            });
+        }
+
         log('>> SYSTEM READY. WAITING FOR COMMANDS...');
 
         // --- OPS DASHBOARD ---
@@ -864,6 +913,112 @@
             });
         }
 
+    });
+})();
+
+// ═══════════════════════════════════════
+// PERSONEN-AKTE
+// ═══════════════════════════════════════
+(function() {
+    const trigger  = document.getElementById('akte-trigger');
+    const modal    = document.getElementById('akte-modal');
+    const closeBtn = document.getElementById('akte-close');
+    const activityEl = document.getElementById('akte-activity');
+
+    if (!trigger || !modal) return;
+
+    function openAkte() {
+        modal.classList.remove('akte-hidden');
+        document.body.style.overflow = 'hidden';
+        if (activityEl) {
+            const now = new Date();
+            activityEl.textContent = now.toLocaleDateString('de-DE') + ' ' +
+                String(now.getHours()).padStart(2,'0') + ':' +
+                String(now.getMinutes()).padStart(2,'0') + ':' +
+                String(now.getSeconds()).padStart(2,'0') + ' — GERADE JETZT';
+        }
+    }
+    function closeAkte() {
+        modal.classList.add('akte-hidden');
+        document.body.style.overflow = '';
+    }
+
+    trigger.addEventListener('click', openAkte);
+    if (closeBtn) closeBtn.addEventListener('click', closeAkte);
+    modal.addEventListener('click', (e) => { if (e.target === modal) closeAkte(); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAkte(); });
+})();
+
+// ═══════════════════════════════════════
+// SYSTEM STATUS WIDGET
+// ═══════════════════════════════════════
+(function() {
+    const metrics = {
+        cpu:    { bar: document.getElementById('sw-cpu'),    val: document.getElementById('sw-cpu-val'),    cur: 88, min: 72, max: 99, unit: '%' },
+        kaffee: { bar: document.getElementById('sw-kaffee'), val: document.getElementById('sw-kaffee-val'), cur: 61, min: 5,  max: 100, unit: '%', drain: true },
+        chaos:  { bar: document.getElementById('sw-chaos'),  val: document.getElementById('sw-chaos-val'),  cur: 77, min: 40, max: 100, unit: '%' },
+        ki:     { bar: document.getElementById('sw-ki'),     val: document.getElementById('sw-ki-val'),     cur: 93, min: 60, max: 100, unit: '%' },
+    };
+
+    function lerp(a, b, t) { return a + (b - a) * t; }
+
+    function tick() {
+        Object.keys(metrics).forEach(key => {
+            const m = metrics[key];
+            if (!m.bar || !m.val) return;
+
+            if (key === 'kaffee') {
+                // Kaffee leert sich langsam, dann springt es auf 100
+                m.cur -= 0.08;
+                if (m.cur < 5) m.cur = 100;
+            } else if (key === 'chaos') {
+                // Chaos: zufällige Spitzen
+                const spike = Math.random() < 0.04;
+                m.cur = spike ? 95 + Math.random() * 5 : lerp(m.cur, m.min + Math.random() * (m.max - m.min), 0.06);
+            } else {
+                m.cur = lerp(m.cur, m.min + Math.random() * (m.max - m.min), 0.04);
+            }
+            m.cur = Math.max(m.min, Math.min(m.max, m.cur));
+            const pct = ((m.cur - m.min) / (m.max - m.min) * 100).toFixed(0);
+            m.bar.style.width = Math.round(m.cur) + '%';
+            m.val.textContent = Math.round(m.cur) + m.unit;
+        });
+    }
+
+    setInterval(tick, 900);
+    tick();
+})();
+
+// ═══════════════════════════════════════
+// NEWSTICKER
+// ═══════════════════════════════════════
+(function() {
+    const track = document.getElementById('ticker-track');
+    if (!track) return;
+
+    const ITEMS = [
+        { t: 'PROKRASTINATION.exe verbraucht 94% CPU — Gegenmaßnahmen: keine',               cls: 'ticker-warn' },
+        { t: 'WARNUNG: Realitätsdistorsionsfeld bei 120% — Evakuierung nicht vorgesehen',     cls: 'ticker-crit' },
+        { t: 'KAFFEE_KERNEL läuft seit 18h ohne Unterbrechung — Status: besorgniserregend',  cls: '' },
+        { t: 'KREATIVITAET.exe hat soeben SCHLAF.daemon überschrieben — Rollback fehlgeschlagen', cls: 'ticker-warn' },
+        { t: 'SYSTEM-UPDATE verfügbar: VERNUNFT v2.0 — Installation abgebrochen durch Benutzer', cls: '' },
+        { t: 'ANOMALIE ERKANNT: Zeitstempel 1974 verursacht Konflikte mit Gegenwart',         cls: 'ticker-warn' },
+        { t: 'WORDPRESS-KERN destabilisiert — Zustand: wie immer',                            cls: '' },
+        { t: 'MISSION STATUS: Chaos aufrechterhalten — ERLEDIGT',                             cls: '' },
+        { t: 'KAFFEE-VORRAT KRITISCH — ETA bis Totalausfall: unberechenbar',                 cls: 'ticker-crit' },
+        { t: 'GEMINI NEURAL LINK aktiv — Bewusstseinszustand: kollaborativ / verwirrend',    cls: '' },
+        { t: 'SELBSTZWEIFEL.exe wurde erfolgreich terminiert — Neustart in 3... 2... 1...',  cls: 'ticker-warn' },
+        { t: 'NEUE ENTITÄT im Gästebuch registriert — Gefährlichkeit: unklar',               cls: '' },
+        { t: 'ANARCHIE-KERNEL v4.0.1 läuft stabil — das ist verdächtig',                    cls: 'ticker-warn' },
+        { t: 'SPEICHER-LEAK IN MOTIVATION.sys ENTDECKT — seit 1974 bekannt, nie gefixt',    cls: '' },
+    ];
+
+    // Doppelt für nahtloses Looping
+    [...ITEMS, ...ITEMS].forEach(({ t, cls }) => {
+        const span = document.createElement('span');
+        span.className = 'ticker-item' + (cls ? ' ' + cls : '');
+        span.textContent = t;
+        track.appendChild(span);
     });
 })();
 
