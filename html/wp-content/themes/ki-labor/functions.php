@@ -110,10 +110,31 @@ function ki_labor_init_content() {
             'status'  => 'corrupted',
             'label'   => 'ÜBERTAKTET',
             'thumb'   => $hero_2_url
+        ),
+        array(
+            'title'   => '> weather',
+            'content' => '<h3>STATUS: CHAOS-LEVEL ANALYSE</h3><p>Das Wetter? Irrelevant. Was zählt ist der Chaos-Level in deinen Schaltkreisen. Dieser Scanner analysiert atmosphärische Destabilisierung, Koffein-Sättigung und die Wahrscheinlichkeit eines kreativen Ausbruchs. Meteorologen hassen diesen Trick.</p><p><strong>Anwendung:</strong><br>Eingabe im Terminal: <code>weather</code></p>',
+            'status'  => 'stable',
+            'label'   => 'PROTOKOLL #001',
+            'thumb'   => get_template_directory_uri() . '/assets/img/hero_07.png'
+        ),
+        array(
+            'title'   => '> top',
+            'content' => '<h3>STATUS: PROZESS-ÜBERWACHUNG</h3><p>Welche dämonischen Prozesse laufen gerade im Hintergrund? KREATIVITAET.exe frisst 94% CPU. PROKRASTINATION.app wurde erfolgreich suspendiert. SELBSTZWEIFEL.exe ist – endlich – terminiert. Ein Blick in den Maschinenraum des Overlords.</p><p><strong>Anwendung:</strong><br>Eingabe im Terminal: <code>top</code></p>',
+            'status'  => 'stable',
+            'label'   => 'PROTOKOLL #002',
+            'thumb'   => get_template_directory_uri() . '/assets/img/hp_muti_steampunk_01.png'
+        ),
+        array(
+            'title'   => '> uptime',
+            'content' => '<h3>STATUS: SYSTEM-LAUFZEIT</h3><p>Das System läuft seit 1974. Ungeplant. Ohne Handbuch. Mit minimaler Wartung und maximalem Kaffee-Input. Aktuelle Laufzeit in Tagen, Stunden, Minuten – live berechnet. Stabilität: unberechenbar. Status: noch online. Irgendwie.</p><p><strong>Anwendung:</strong><br>Eingabe im Terminal: <code>uptime</code></p>',
+            'status'  => 'stable',
+            'label'   => 'PROTOKOLL #003',
+            'thumb'   => get_template_directory_uri() . '/assets/img/hp_vater_steampunk_01.jpg'
         )
     );
 
-    $version = 'v5'; // Bump to trigger re-insert if needed
+    $version = 'v6'; // Bump to trigger re-insert if needed
     if (!get_option('ki_labor_content_gen_' . $version)) {
         foreach ($projects as $project) {
             $existing_post = get_page_by_title($project['title'], OBJECT, 'post');

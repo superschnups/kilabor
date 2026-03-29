@@ -687,7 +687,7 @@
                         document.body.classList.remove('mode-time-warp');
                         const personName = card.querySelector('h3').innerText;
                         timelineTitle.innerText = "HISTORISCHES ARCHIV: " + personName;
-                        generateTimeline();
+                        // Timeline moved to Overlords page
                         timelineModal.classList.remove('timeline-hidden');
                         log('>> TEMPORAL SHIFT COMPLETE.', 'ok');
                     }, 1200); 
@@ -701,69 +701,7 @@
                 });
             }
 
-            function generateTimeline() {
-                timelineTrack.innerHTML = '';
-                
-                const specialEvents = {
-                    1974: "ARCHITEKTUR-UPDATE: Der zukünftige Overlord (Sascha) wird von der Kupfer-Matriarchin erfolgreich in die Biosphäre kompiliert. Initialer System-Schrei registriert.",
-                    1981: "SYSTEM-ERWEITERUNG: Ein neuer kybernetischer Bruder-Knoten geht online. Visuelles Sensoren-Update (Upload steht noch aus).",
-                    1983: "NETZWERK-UPDATE: AETHER-SIBLING V1.0 (Schwester Meli) bootet erfolgreich. Chaos-Protokolle und pneumatische Reflexe initialisiert."
-                };
-
-                const events = [
-                    "Kritische Dampfdruck-Anomalie entdeckt.",
-                    "Erster erfolgreicher Test des kybernetischen Herzmuskels.",
-                    "System-Absturz aufgrund von überhitzten Kupferspulen.",
-                    "Neural-Link mit den Primär-Vorläufern hergestellt.",
-                    "Mechanische Gliedmaßen rüsten auf Hydraulik um.",
-                    "Prototyp V2 entkommt aus dem Testlabor.",
-                    "Verhandlungen mit dem KI-Mainframe gescheitert.",
-                    "Flucht in die äußeren Kolonien (Offline-Modus).",
-                    "Reboot der emotionalen Sub-Parameter.",
-                    "Wartungsarbeiten an den Exo-Skeletten abgeschlossen."
-                ];
-
-                let yearsToRender = [];
-                for(let y = 1955; y <= new Date().getFullYear(); y += 5) {
-                    yearsToRender.push(y);
-                }
-                [1974, 1981, 1983].forEach(sy => {
-                    if(!yearsToRender.includes(sy)) yearsToRender.push(sy);
-                });
-                yearsToRender.sort((a,b) => a - b);
-
-                let isLeft = true;
-                
-                yearsToRender.forEach(year => {
-                    const node = document.createElement('div');
-                    node.className = 'time-node ' + (isLeft ? 'left' : 'right');
-                    
-                    const content = document.createElement('div');
-                    content.className = 'time-content';
-                    
-                    if(specialEvents[year]) {
-                        content.classList.add('omega-node');
-                        content.innerHTML =
-                            '<div class="tc-header">OMEGA-KLASSE &nbsp;&#9670;&nbsp; <span class="tc-stamp omega">!! FREIGEGEBEN !!</span></div>' +
-                            '<h3>[ ' + year + ' ]</h3>' +
-                            '<p><strong>⚡ KRITISCHES SYSTEMEREIGNIS ⚡</strong><br>' + specialEvents[year] + '</p>' +
-                            '<div class="tc-footer">QUELLE: ARCHIV-SEKTOR 7 &nbsp;&#9670;&nbsp; ZUGRIFF: OVERLORD ONLY</div>';
-                    } else {
-                        const bgStory = events[Math.floor(Math.random() * events.length)];
-                        const akteNr = Math.floor(Math.random()*9000)+1000;
-                        content.innerHTML =
-                            '<div class="tc-header">AKTE #' + akteNr + ' &nbsp;&#9670;&nbsp; <span class="tc-stamp">KLASSIFIZIERT</span></div>' +
-                            '<h3>[ ' + year + ' ]</h3>' +
-                            '<p>' + bgStory + ' Weitere Datenquellen als OMEGA-KLASSE klassifiziert.</p>' +
-                            '<div class="tc-footer">ZEITSTEMPEL: ' + year + '.01.01 &nbsp;&#9670;&nbsp; INTEGRITAET: FRAGLICH</div>';
-                    }
-                    
-                    node.appendChild(content);
-                    timelineTrack.appendChild(node);
-                    
-                    isLeft = !isLeft;
-                });
-            }
+            // Timeline function moved to Overlords page
         }
 
         // --- GÄSTEBUCH ---
@@ -947,6 +885,31 @@
     if (closeBtn) closeBtn.addEventListener('click', closeAkte);
     modal.addEventListener('click', (e) => { if (e.target === modal) closeAkte(); });
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAkte(); });
+})();
+
+// ═══════════════════════════════════════
+// SYS WIDGET TOGGLE
+// ═══════════════════════════════════════
+(function() {
+    const sysWidget = document.getElementById('sys-widget');
+    const sysToggle = document.getElementById('sys-toggle');
+    const sysArrow  = document.getElementById('sys-toggle-arrow');
+
+    if (!sysWidget || !sysToggle || !sysArrow) return;
+
+    function toggleSysWidget() {
+        const isHidden = sysWidget.classList.contains('hidden');
+        if (isHidden) {
+            sysWidget.classList.remove('hidden');
+            sysArrow.style.display = 'none';
+        } else {
+            sysWidget.classList.add('hidden');
+            sysArrow.style.display = 'block';
+        }
+    }
+
+    sysToggle.addEventListener('click', toggleSysWidget);
+    sysArrow.addEventListener('click', toggleSysWidget);
 })();
 
 // ═══════════════════════════════════════
