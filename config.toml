@@ -1,0 +1,12 @@
+baseURL = "/"
+languageCode = "de-de"
+title = "DIGITALE ANARCHIE | KI-LABOR"
+
+[params]
+    description = "Beruf: Geisteskrank & Gemini Player. Ästhetische Kriegsführung und KI-Labor."
+    author = "Sascha Rode"
+
+[outputs]
+    home = ["HTML"]
+    page = ["HTML"]
+    section = ["HTML"]

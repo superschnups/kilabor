@@ -1,0 +1,129 @@
+{{ define "main" }}
+<div class="main-content">
+<!-- STARTSEITE: KI-LABOR -->
+<header>
+    <h1 style="color: #ff4500; font-size: 2.5rem; letter-spacing: 8px; text-shadow: 0 0 20px rgba(255,69,0,0.4);">SASCHAS ZENTRUM FÜR DIGITALE ANARCHIE</h1>
+    <p class="tagline" style="color: #d4af37; font-size: 1.1rem; letter-spacing: 3px;">Beruf: Geisteskrank & Gemini Player</p>
+    <div class="warning-box" style="border: 1px dashed #ff4500; padding: 15px; margin: 20px auto; max-width: 600px; color: #ff4500; font-size: 0.8rem;">
+        ⚠ VORSICHT: INSTABILE ALGORITHMEN. BETRETEN AUF EIGENE GEFAHR. <br>
+        KEINE HAFTUNG FÜR DATENVERLUST ODER EXISTENZIELLE KRISEN.
+    </div>
+</header>
+
+<div class="reboot-container" style="text-align: center; margin-bottom: 10px;">
+    <a href="/" style="color: #444; font-size: 0.7rem; text-decoration: none; border: 1px solid #222; padding: 2px 10px; text-transform: uppercase; letter-spacing: 2px;">[ Manual System Reboot ]</a>
+</div>
+
+<!-- PERSONEN NAVIGATION (Über dem Bild) -->
+<div style="margin-bottom: 20px; padding-top: 10px;">
+    <p style="text-align: center; color: #444; font-size: 0.6rem; letter-spacing: 5px;">// ZENTRAL-ARCHIV ZUGRIFF</p>
+    {{ partial "person_nav.html" . }}
+</div>
+
+<div style="text-align: center; margin-bottom: 30px;">
+    <img src="/img/hero.png" class="hero-image" alt="Steampunk Sascha" style="border: 2px solid #3d2b1f; box-shadow: 0 0 30px rgba(0,0,0,0.5); max-width: 900px; width: 100%;">
+</div>
+
+<div class="control-panel">
+    <button class="switch-btn" data-mode="kernel">KI-KERNEL</button>
+    <button class="switch-btn green" data-mode="anarchy">ANARCHIE-MODE</button>
+    <button class="switch-btn blue" data-mode="bypass">SECURITY-BYPASS</button>
+    <button class="switch-btn purple" data-mode="scan">DEEP SCAN</button>
+    <button class="switch-btn red" data-mode="overdrive">OVERDRIVE</button>
+</div>
+
+<!-- OPS DASHBOARD (EXAKT NACH SCREENSHOT) -->
+<div id="ops-dashboard-sign" style="background: rgba(20,0,0,0.8); border: 1px solid #600; padding: 20px; margin: 40px auto 0; max-width: 900px; font-family: 'Courier New', monospace; color: #f00; text-align: center; box-shadow: inset 0 0 20px rgba(255,0,0,0.1);">
+    <div class="ops-sign-header" style="margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 15px;">
+        <span class="ops-blink-dot" style="width: 8px; height: 8px; background: #f00; border-radius: 50%; display: inline-block; animation: blinker 1s infinite;"></span>
+        <span class="ops-title" style="letter-spacing: 5px; font-size: 0.9rem; font-weight: bold;">● CHIRURGISCHES OPS-DASHBOARD ●</span>
+        <span class="ops-blink-dot" style="width: 8px; height: 8px; background: #f00; border-radius: 50%; display: inline-block; animation: blinker 1s infinite;"></span>
+    </div>
+    <div class="ops-sign-stats" style="display: flex; justify-content: center; align-items: center; gap: 30px; margin-bottom: 10px;">
+        <div class="ops-stat-block">
+            <div style="font-size: 0.6rem; color: #666; margin-bottom: 5px;">HEUTE</div>
+            <div style="font-size: 1.2rem; letter-spacing: 2px;">|||</div>
+            <div style="font-size: 0.9rem;">3 OPS</div>
+        </div>
+        <span style="color: #444; font-size: 1.2rem;">◈</span>
+        <div class="ops-stat-block">
+            <div style="font-size: 0.6rem; color: #666; margin-bottom: 5px;">ERFOLGE</div>
+            <div style="font-size: 1.2rem; letter-spacing: 2px;">|½</div>
+            <div style="font-size: 0.9rem; color: #d4af37;">1.5</div>
+        </div>
+        <span style="color: #444; font-size: 1.2rem;">◈</span>
+        <div class="ops-stat-block">
+            <div style="font-size: 0.6rem; color: #666; margin-bottom: 5px;">RESTE</div>
+            <div style="font-size: 0.9rem; color: #f00;">KUEHLHAUS C</div>
+        </div>
+    </div>
+    <div style="font-size: 0.6rem; color: #444; margin-top: 10px; letter-spacing: 2px;">[ PROTOKOLL EINSEHEN ]</div>
+</div>
+
+<!-- SCHWARZES TERMINAL / SYSTEM LOG -->
+<div id="terminal-container" style="margin-top: 20px; max-width: 900px; margin-left: auto; margin-right: auto;">
+    <div style="background: #000; border: 1px solid #1a1a1a; padding: 20px; font-family: 'Courier New', monospace; box-shadow: inset 0 0 20px rgba(0,255,65,0.03);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; border-bottom: 1px solid #1a1a1a; padding-bottom: 10px;">
+            <span style="color: #333; font-size: 0.65rem; letter-spacing: 3px;">// SYSTEM_LOG_FEED</span>
+            <span id="fortune-trigger" style="color: #222; font-size: 0.6rem; letter-spacing: 2px; cursor: pointer; border: 1px solid #1a1a1a; padding: 2px 10px;">[ ORAKEL ]</span>
+        </div>
+        <div id="fortune-text" style="color: #333; font-size: 0.7rem; min-height: 20px; margin-bottom: 15px; font-style: italic;"></div>
+        <div id="log-output" style="color: #0f0; font-size: 0.75rem; height: 220px; overflow-y: auto; margin-bottom: 15px; display: flex; flex-direction: column-reverse;"></div>
+        <div style="display: flex; align-items: center; border-top: 1px solid #1a1a1a; padding-top: 10px;">
+            <span style="color: #ff4500; font-size: 0.75rem; margin-right: 8px;">sascha@ki-labor:~$</span>
+            <input id="terminal-input" type="text" style="flex: 1; background: transparent; border: none; color: #0f0; font-family: 'Courier New', monospace; font-size: 0.75rem; outline: none;" placeholder="befehl eingeben... (help)">
+        </div>
+    </div>
+</div>
+
+<!-- PROJEKT-ARCHIV -->
+<div id="terminal-container" style="margin-top: 5px;">
+
+<div class="content-box">
+    <div class="content-header" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <h2 style="margin: 0;">PROJEKT-ARCHIV</h2>
+        <div class="filter-controls">
+            <button class="filter-btn active" data-filter="all">ALLE</button>
+            <button class="filter-btn" data-filter="stable">STABIL</button>
+            <button class="filter-btn" data-filter="corrupted">KRITISCH</button>
+            <a href="/mac-nerds/" class="filter-btn" style="color: #0f0; border-color: rgba(0,255,65,0.4); text-decoration: none;">MAC NERDS</a>
+        </div>
+    </div>
+    
+    <div class="portfolio-grid" id="main-grid">
+        {{ range .Site.RegularPages }}
+            {{ if eq .Section "posts" }}
+            <a href="{{ .RelPermalink }}" class="portfolio-link project-card" data-category="{{ .Params.status_class | default "stable" }}">
+                <div class="portfolio-item">
+                    <span class="status-tag {{ .Params.status_class | default "stable" }}">
+                        {{ .Params.status_label | default "AKTIV" }}
+                    </span>
+                    <div class="project-header-wrap">
+                        {{ if .Params.thumb }}
+                            <img src="{{ .Params.thumb }}" class="project-thumb" alt="Preview">
+                        {{ end }}
+                        <h3>{{ .Title }}</h3>
+                    </div>
+                    <div class="item-excerpt">
+                        {{ .Summary }}
+                    </div>
+                </div>
+            </a>
+            {{ end }}
+        {{ end }}
+    </div>
+</div>
+
+<!-- Ende main-content -->
+
+<!-- BOOT SCREEN -->
+<div id="boot-screen">
+    <div id="boot-log"></div>
+</div>
+
+<style>
+    @keyframes blinker {
+        50% { opacity: 0; }
+    }
+</style>
+{{ end }}

@@ -1,0 +1,58 @@
+[
+    {
+        "cat": "system",
+        "title": "Hardware-Kurzprofil",
+        "cmd": "system_profiler SPHardwareDataType | grep -E \"Model|Chip|Memory|Serial\"",
+        "desc": "Model, Chip, RAM und Seriennummer auf einen Blick — ohne Klicken durch Systeminfo.",
+        "risk": "safe"
+    },
+    {
+        "cat": "system",
+        "title": "macOS Version",
+        "cmd": "sw_vers",
+        "desc": "ProductName, Version und Build. Schneller als jedes UI-Menü.",
+        "risk": "safe"
+    },
+    {
+        "cat": "system",
+        "title": "CPU exakter Bezeichner",
+        "cmd": "sysctl -n machdep.cpu.brand_string",
+        "desc": "Zeigt den genauen CPU-String wenn jemand fragt und du nicht suchen willst.",
+        "risk": "safe"
+    },
+    {
+        "cat": "netzwerk",
+        "title": "Netzwerkqualität testen",
+        "cmd": "networkQuality",
+        "desc": "Apples eigenes Speedtest-Tool seit macOS 12. Misst Upload, Download und Responsiveness (RPM).",
+        "risk": "safe"
+    },
+    {
+        "cat": "netzwerk",
+        "title": "Alle offenen Ports",
+        "cmd": "lsof -i -n -P | grep LISTEN",
+        "desc": "Welcher Prozess hört auf welchem Port? Unverzichtbar wenn ein Port schon belegt ist.",
+        "risk": "safe"
+    },
+    {
+        "cat": "dateien",
+        "title": "DS_Store aufräumen",
+        "cmd": "find ~ -name '*.DS_Store' -delete 2>/dev/null && echo 'Aufgeräumt.'",
+        "desc": "Löscht alle .DS_Store-Dateien im Home-Verzeichnis. Gut vor git-Commits.",
+        "risk": "safe"
+    },
+    {
+        "cat": "performance",
+        "title": "Top 15 CPU-Fresser",
+        "cmd": "top -o cpu -n 15 -l 1 | tail -16",
+        "desc": "Einmaliger Snapshot der 15 CPU-intensivsten Prozesse.",
+        "risk": "safe"
+    },
+    {
+        "cat": "tweaks",
+        "title": "Dock: sofortiges Einblenden",
+        "cmd": "defaults write com.apple.dock autohide-delay -float 0 && defaults write com.apple.dock autohide-time-modifier -float 0.3 && killall Dock",
+        "desc": "Entfernt die Verzögerung beim Dock-Einblenden. Sofort aktiv.",
+        "risk": "safe"
+    }
+]

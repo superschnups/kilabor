@@ -1,0 +1,46 @@
+<div class="person-nav-container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin: 40px 0;">
+    {{ if eq .Section "personen" }}
+    <a href="/" class="person-back" style="display: inline-block; color: #ff4500; font-size: 0.7rem; font-weight: bold; letter-spacing: 3px; text-decoration: none; font-family: 'Courier New', monospace; border: 2px solid #ff4500; padding: 7px 20px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: rotate(8deg); background: rgba(0,0,0,0.8); box-shadow: 0 0 12px rgba(255,69,0,0.4), inset 0 0 8px rgba(255,69,0,0.2); text-transform: uppercase; margin-bottom: -10px;">
+        ⚡ ZURÜCK ZUR BASIS ⚡
+    </a>
+    {{ end }}
+    
+    <div class="person-nav-row" style="display: flex; justify-content: center; align-items: center; gap: 35px; flex-wrap: wrap; position: relative;">
+    {{ $persons := slice "mutti" "vater" "bruder" "schwester" "sascha" "sven" }}
+    {{ range $persons }}
+        {{ $id := . }}
+        {{ $name := . | upper }}
+        {{ $img := "" }}
+        {{ if eq $id "mutti" }}{{ $img = "/img/comicFigures/hp_mutti_comic_1.jpeg" }}{{ end }}
+        {{ if eq $id "bruder" }}{{ $img = "/img/comicFigures/hp_freddy_comic_1.png" }}{{ end }}
+        {{ if eq $id "sascha" }}{{ $img = "/img/comicFigures/hp_sascha_comic_1.jpeg" }}{{ end }}
+        {{ if eq $id "sven" }}{{ $img = "/img/comicFigures/hp_sven_comic_1.jpeg" }}{{ end }}
+        {{ if eq $id "vater" }}{{ $img = "/img/comicFigures/hp_vater_comic_1.png" }}{{ end }}
+        {{ if eq $id "schwester" }}{{ $img = "/img/comicFigures/hp_meli_comic_1.png" }}{{ end }}
+        
+        <a href="/personen/{{ $id }}/" class="person-nav-item">
+            <div class="person-nav-portrait" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4af37; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #d4af37; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 10px rgba(212,175,55,0.2);">
+                {{ if $img }}
+                    <img src="{{ $img }}" alt="{{ $name }}" style="width: 100%; height: 100%; object-fit: cover;">
+                {{ else }}
+                    {{ substr $name 0 1 }}
+                {{ end }}
+            </div>
+            <span class="person-nav-label" style="margin-top: 8px; font-size: 0.85rem; letter-spacing: 1px; color: rgba(212,175,55,0.6); font-family: 'Courier New', monospace; font-weight: bold;">{{ $name }}</span>
+        </a>
+    {{ end }}
+    </div>
+</div>
+
+<style>
+    .person-nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.2s; }
+    .person-nav-item:hover { transform: scale(1.1); }
+    .person-nav-item:hover .person-nav-label { color: #d4af37 !important; }
+    .person-back:hover { 
+        transform: rotate(0deg) scale(1.1) !important; 
+        color: #ff0000 !important; 
+        border-color: #ff0000 !important; 
+        box-shadow: 0 0 25px #ff4500 !important;
+        background: rgba(255, 69, 0, 0.1) !important;
+    }
+</style>
