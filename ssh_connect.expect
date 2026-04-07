@@ -1,10 +1,10 @@
 #!/usr/bin/expect -f
 set timeout 15
 
-spawn ssh -o StrictHostKeyChecking=accept-new su72785@access-5019642512.webspace-host.com
+spawn ssh -o StrictHostKeyChecking=accept-new $IONOS_HOST
 expect {
     "*?assword:*" {
-        send "Jessilein@74\r"
+        $IONOS_SSH"
     }
     timeout {
         puts "Timeout waiting for password prompt"
