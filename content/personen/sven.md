@@ -2,6 +2,11 @@
 title: "Sven"
 role: "Externe Variable & Unbekannter Faktor"
 initial: "?"
+comic_img: "/img/comicFigures/hp_sven_comic_1.jpeg"
+stat_gefahr: 33
+stat_stabilitaet: 45
+stat_chaos: 55
+stat_kompetenz: 50
 status: "UNBEKANNT"
 date: 2026-03-18
 events:

@@ -13,6 +13,11 @@ sicherheitsstufe: "SCHWARZ"
 initial: "S"
 date: 2026-03-18
 img: "/img/hero.png"
+comic_img: "/img/comicFigures/hp_sascha_comic_1.jpeg"
+stat_gefahr: 88
+stat_stabilitaet: 22
+stat_chaos: 99
+stat_kompetenz: 86
 events:
   - year: 1974
     text: '⚡ OVERLORD-MODUL V1.0 AKTIVIERT. Erster System-Schrei erfolgreich registriert. Matriarchin bestätigt Empfang. KI-Labor Grundstein: GELEGT (unbewusst).'

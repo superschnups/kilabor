@@ -5,6 +5,11 @@ initial: "V"
 status: "AKTIV"
 date: 2026-03-18
 img: "/img/akte/hp_vater_akte_2.png"
+comic_img: "/img/comicFigures/hp_vater_comic_1.png"
+stat_gefahr: 72
+stat_stabilitaet: 54
+stat_chaos: 60
+stat_kompetenz: 89
 alias: "DER ALTE MASCHINIST"
 geburtsjahr: "1953 // DATENSTEMPEL VERROSTET"
 occupation: "Hydraulik-Ingenieur · Dampfkessel-Flüsterer · Schraubenzieher-Philosoph"

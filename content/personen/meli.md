@@ -1,5 +1,6 @@
 ---
 title: "Schwester"
+slug: "schwester"
 alias: "AETHER-SIBLING / PNEUMATIK-FEE / CLAN-DIPLOMATIN"
 geburtsjahr: "1983 (Aether-Edition)"
 standort: "CLAN-HUB (DEZENTRAL)"
@@ -13,6 +14,11 @@ sicherheitsstufe: "GOLD"
 initial: "S"
 date: 2026-03-18
 img: "/img/hp_meli_steampunk_01.jpeg"
+comic_img: "/img/comicFigures/hp_meli_comic_1.png"
+stat_gefahr: 38
+stat_stabilitaet: 96
+stat_chaos: 25
+stat_kompetenz: 82
 events:
   - year: 1983
     text: '⚡ AETHER-SIBLING V1.0 BOOTET ERFOLGREICH. Pneumatische Reflexe sofort aktiv. Chaos-Protokolle initialisiert. Clan-Netzwerk vollständig.'

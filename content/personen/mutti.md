@@ -13,6 +13,11 @@ sicherheitsstufe: "VIOLETT"
 initial: "M"
 date: 2026-03-18
 img: "/img/hp_muti_steampunk_01.png"
+comic_img: "/img/comicFigures/hp_mutti_comic_1.jpeg"
+stat_gefahr: 99
+stat_stabilitaet: 100
+stat_chaos: 18
+stat_kompetenz: 97
 events:
   - year: 1955
     text: 'MATRIARCHIN-MODUL V1.0 INITIALISIERT. Erste Steampunk-Algorithmen erfolgreich implementiert. Systemstatus: Brillant.'

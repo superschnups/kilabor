@@ -19,377 +19,269 @@
     
     <main class="container">
         
-<div class="person-page-wrapper visible" style="padding-bottom: 100px; opacity: 1 !important;">
+<div class="mac-nerds-wrapper" style="max-width: 900px; margin: 0 auto; padding: 20px;">
+
     
+    <header style="text-align: center; margin-bottom: 40px;">
+        <p style="color: rgba(212,175,55,0.5); font-family: 'Courier New', monospace; letter-spacing: 4px; font-size: 0.75rem; margin-bottom: 8px;">// GEHEIMES TERMINAL-ARCHIV</p>
+        <h1 style="color: #ff4500; letter-spacing: 10px; font-size: 2.2rem; text-shadow: 0 0 20px rgba(255,69,0,0.3); font-family: 'Courier New', monospace; margin: 0;">MAC NERDS TERMINAL</h1>
+        <p style="color: rgba(212,175,55,0.4); font-family: 'Courier New', monospace; font-size: 0.8rem; margin-top: 10px;">Geheime Terminal-Befehle und macOS Tweaks für den digitalen Widerstand.</p>
+    </header>
+
     
-    <div class="person-nav-container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin: 40px 0;">
-    
-    
-    <div class="person-nav-row" style="display: flex; justify-content: center; align-items: center; gap: 35px; flex-wrap: wrap; position: relative;">
-    
-    
+    <div id="cat-filter" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
+        <button class="cat-btn active" data-cat="all" onclick="filterCat('all', this)">ALLE</button>
         
+        <button class="cat-btn" data-cat="system" onclick="filterCat('system', this)">SYSTEM</button>
         
+        <button class="cat-btn" data-cat="netzwerk" onclick="filterCat('netzwerk', this)">NETZWERK</button>
         
+        <button class="cat-btn" data-cat="dateien" onclick="filterCat('dateien', this)">DATEIEN</button>
         
+        <button class="cat-btn" data-cat="performance" onclick="filterCat('performance', this)">PERFORMANCE</button>
         
+        <button class="cat-btn" data-cat="tweaks" onclick="filterCat('tweaks', this)">TWEAKS</button>
         
-        
-        
-        
-        
-        <a href="/personen/mutti/" class="person-nav-item">
-            <div class="person-nav-portrait" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4af37; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #d4af37; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 10px rgba(212,175,55,0.2);">
-                
-                    <img src="/img/comicFigures/hp_mutti_comic_1.jpeg" alt="MUTTI" style="width: 100%; height: 100%; object-fit: cover;">
-                
-            </div>
-            <span class="person-nav-label" style="margin-top: 8px; font-size: 0.85rem; letter-spacing: 1px; color: rgba(212,175,55,0.6); font-family: 'Courier New', monospace; font-weight: bold;">MUTTI</span>
-        </a>
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <a href="/personen/vater/" class="person-nav-item">
-            <div class="person-nav-portrait" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4af37; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #d4af37; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 10px rgba(212,175,55,0.2);">
-                
-                    <img src="/img/comicFigures/hp_vater_comic_1.png" alt="VATER" style="width: 100%; height: 100%; object-fit: cover;">
-                
-            </div>
-            <span class="person-nav-label" style="margin-top: 8px; font-size: 0.85rem; letter-spacing: 1px; color: rgba(212,175,55,0.6); font-family: 'Courier New', monospace; font-weight: bold;">VATER</span>
-        </a>
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <a href="/personen/bruder/" class="person-nav-item">
-            <div class="person-nav-portrait" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4af37; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #d4af37; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 10px rgba(212,175,55,0.2);">
-                
-                    <img src="/img/comicFigures/hp_freddy_comic_1.png" alt="BRUDER" style="width: 100%; height: 100%; object-fit: cover;">
-                
-            </div>
-            <span class="person-nav-label" style="margin-top: 8px; font-size: 0.85rem; letter-spacing: 1px; color: rgba(212,175,55,0.6); font-family: 'Courier New', monospace; font-weight: bold;">BRUDER</span>
-        </a>
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <a href="/personen/schwester/" class="person-nav-item">
-            <div class="person-nav-portrait" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4af37; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #d4af37; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 10px rgba(212,175,55,0.2);">
-                
-                    <img src="/img/comicFigures/hp_meli_comic_1.png" alt="SCHWESTER" style="width: 100%; height: 100%; object-fit: cover;">
-                
-            </div>
-            <span class="person-nav-label" style="margin-top: 8px; font-size: 0.85rem; letter-spacing: 1px; color: rgba(212,175,55,0.6); font-family: 'Courier New', monospace; font-weight: bold;">SCHWESTER</span>
-        </a>
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <a href="/personen/sascha/" class="person-nav-item">
-            <div class="person-nav-portrait" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4af37; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #d4af37; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 10px rgba(212,175,55,0.2);">
-                
-                    <img src="/img/comicFigures/hp_sascha_comic_1.jpeg" alt="SASCHA" style="width: 100%; height: 100%; object-fit: cover;">
-                
-            </div>
-            <span class="person-nav-label" style="margin-top: 8px; font-size: 0.85rem; letter-spacing: 1px; color: rgba(212,175,55,0.6); font-family: 'Courier New', monospace; font-weight: bold;">SASCHA</span>
-        </a>
-    
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        <a href="/personen/sven/" class="person-nav-item">
-            <div class="person-nav-portrait" style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid #d4af37; background: #222; display: flex; align-items: center; justify-content: center; overflow: hidden; color: #d4af37; font-weight: bold; font-size: 1.2rem; box-shadow: 0 0 10px rgba(212,175,55,0.2);">
-                
-                    <img src="/img/comicFigures/hp_sven_comic_1.jpeg" alt="SVEN" style="width: 100%; height: 100%; object-fit: cover;">
-                
-            </div>
-            <span class="person-nav-label" style="margin-top: 8px; font-size: 0.85rem; letter-spacing: 1px; color: rgba(212,175,55,0.6); font-family: 'Courier New', monospace; font-weight: bold;">SVEN</span>
-        </a>
-    
     </div>
+
+    
+    <div id="cmd-grid">
+        
+        <div class="cmd-card" data-cat="system">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">SYSTEM</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">Hardware-Kurzprofil</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'system_profiler SPHardwareDataType | grep -E \u0026#34;Model|Chip|Memory|Serial\u0026#34;')">
+                <code>system_profiler SPHardwareDataType | grep -E &#34;Model|Chip|Memory|Serial&#34;</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">Model, Chip, RAM und Seriennummer auf einen Blick — ohne Klicken durch Systeminfo.</p>
+        </div>
+        
+        <div class="cmd-card" data-cat="system">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">SYSTEM</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">macOS Version</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'sw_vers')">
+                <code>sw_vers</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">ProductName, Version und Build. Schneller als jedes UI-Menü.</p>
+        </div>
+        
+        <div class="cmd-card" data-cat="system">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">SYSTEM</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">CPU exakter Bezeichner</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'sysctl -n machdep.cpu.brand_string')">
+                <code>sysctl -n machdep.cpu.brand_string</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">Zeigt den genauen CPU-String wenn jemand fragt und du nicht suchen willst.</p>
+        </div>
+        
+        <div class="cmd-card" data-cat="netzwerk">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">NETZWERK</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">Netzwerkqualität testen</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'networkQuality')">
+                <code>networkQuality</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">Apples eigenes Speedtest-Tool seit macOS 12. Misst Upload, Download und Responsiveness (RPM).</p>
+        </div>
+        
+        <div class="cmd-card" data-cat="netzwerk">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">NETZWERK</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">Alle offenen Ports</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'lsof -i -n -P | grep LISTEN')">
+                <code>lsof -i -n -P | grep LISTEN</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">Welcher Prozess hört auf welchem Port? Unverzichtbar wenn ein Port schon belegt ist.</p>
+        </div>
+        
+        <div class="cmd-card" data-cat="dateien">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">DATEIEN</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">DS_Store aufräumen</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'find ~ -name \u0026#39;*.DS_Store\u0026#39; -delete 2\u0026gt;\/dev\/null \u0026amp;\u0026amp; echo \u0026#39;Aufgeräumt.\u0026#39;')">
+                <code>find ~ -name &#39;*.DS_Store&#39; -delete 2&gt;/dev/null &amp;&amp; echo &#39;Aufgeräumt.&#39;</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">Löscht alle .DS_Store-Dateien im Home-Verzeichnis. Gut vor git-Commits.</p>
+        </div>
+        
+        <div class="cmd-card" data-cat="performance">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">PERFORMANCE</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">Top 15 CPU-Fresser</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'top -o cpu -n 15 -l 1 | tail -16')">
+                <code>top -o cpu -n 15 -l 1 | tail -16</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">Einmaliger Snapshot der 15 CPU-intensivsten Prozesse.</p>
+        </div>
+        
+        <div class="cmd-card" data-cat="tweaks">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">TWEAKS</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">Dock: sofortiges Einblenden</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'defaults write com.apple.dock autohide-delay -float 0 \u0026amp;\u0026amp; defaults write com.apple.dock autohide-time-modifier -float 0.3 \u0026amp;\u0026amp; killall Dock')">
+                <code>defaults write com.apple.dock autohide-delay -float 0 &amp;&amp; defaults write com.apple.dock autohide-time-modifier -float 0.3 &amp;&amp; killall Dock</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">Entfernt die Verzögerung beim Dock-Einblenden. Sofort aktiv.</p>
+        </div>
+        
+    </div>
+
 </div>
 
 <style>
-    .person-nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.2s; }
-    .person-nav-item:hover { transform: scale(1.1); }
-    .person-nav-item:hover .person-nav-label { color: #d4af37 !important; }
-    .person-back:hover { 
-        transform: rotate(0deg) scale(1.1) !important; 
-        color: #ff0000 !important; 
-        border-color: #ff0000 !important; 
-        box-shadow: 0 0 25px #ff4500 !important;
-        background: rgba(255, 69, 0, 0.1) !important;
-    }
-</style>
+    .mac-nerds-wrapper { font-family: 'Courier New', monospace; }
 
-
-    <div class="container" style="max-width: 900px; margin: 0 auto; padding: 0 20px;">
-        <header style="text-align: center; margin-bottom: 20px;">
-            <h1 style="color: #ff4500; letter-spacing: 10px; font-size: 2.2rem; text-shadow: 0 0 20px rgba(255,69,0,0.3); font-family: 'Courier New', monospace; margin-top: 10px;">MAC NERDS TERMINAL</h1>
-            <p style="color: rgba(212,175,55,0.5); font-family: 'Courier New', monospace; letter-spacing: 3px; font-size: 0.8rem;">// DATENSTROM & CHRONIK</p>
-        </header>
-
-        
-        <div class="timeline-track">
-            
-        </div>
-
-        
-        <div class="akte-sign-container" style="text-align: center; margin-top: 100px;">
-            
-            <button class="mega-akte-btn default-btn" 
-                    onclick="document.getElementById('person-akte-modal').style.display='flex'; document.body.style.overflow='hidden';"
-                    style="background: linear-gradient(135deg, #2a1b0a 0%, #000 100%); border: 4px double #b87333; color: #d4af37; padding: 40px 80px; cursor: pointer; position: relative; box-shadow: 0 0 40px rgba(0,0,0,0.8); display: inline-flex; flex-direction: column; align-items: center; font-family: 'Courier New', monospace;">
-                <span style="color: #b87333; font-size: 1.5rem; letter-spacing: 10px; margin-bottom: 15px;">⚙ ⚙ ⚙</span>
-                <span style="font-size: 0.7rem; letter-spacing: 5px; color: rgba(212,175,55,0.6); text-transform: uppercase;">ZENTRAL-ARCHIV ZUGRIFF</span>
-                <span style="font-size: 2.2rem; font-weight: bold; letter-spacing: 12px; margin: 15px 0; color: #ff4500; text-shadow: 0 0 15px rgba(255,69,0,0.4);">AKTE: MAC NERDS TERMINAL</span>
-                <span style="font-size: 0.75rem; border-top: 1px solid rgba(212,175,55,0.3); padding-top: 15px; width: 100%; letter-spacing: 2px;">STATUS: KLASSIFIZIERT</span>
-                <span style="color: #b87333; font-size: 1.5rem; letter-spacing: 10px; margin-top: 15px;">⚙ ⚙ ⚙</span>
-            </button>
-            
-        </div>
-    </div>
-</div>
-
-
-<div id="person-akte-modal" style="position: fixed; inset: 0; z-index: 1000000; background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; padding: 10px; overflow: hidden; perspective: 1000px;">
-    <div style="display: flex; flex-direction: column; align-items: center; max-width: 585px; width: 95%;">
-    <div class="akte-inner" style="width: 100%; background: #d9c5a0; background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.1) 0%, transparent 100%), url('https://www.transparenttextures.com/patterns/old-paper.png'); border: 1px solid #8b7355; padding: 25px; position: relative; font-family: 'Courier New', monospace; box-shadow: 10px 20px 50px rgba(0,0,0,0.8), inset 0 0 100px rgba(139,115,85,0.3); transform: rotate(-2deg); animation: throw-sign 0.5s ease-out forwards; color: #2a1b0a;">
-        
-        <style>
-            @keyframes throw-sign {
-                0% { transform: rotate(-10deg) scale(0.7) translateY(500px); opacity: 0; }
-                100% { transform: rotate(-2deg) scale(1) translateY(0); opacity: 1; }
-            }
-            .akte-inner h1 { color: #2a1b0a !important; font-size: 1.8rem !important; margin: 10px 0 2px !important; text-shadow: none !important; border-bottom: 2px solid rgba(42,27,10,0.2); }
-            .akte-inner div, .akte-inner p { font-size: 0.75rem !important; }
-            .akte-inner .data-row { border-bottom: 1px solid rgba(42,27,10,0.1) !important; padding: 6px 0 !important; }
-            .akte-inner .label { color: #5d4037 !important; font-weight: bold; }
-            .akte-inner .red-stamp { border: 2px solid #b71c1c; color: #b71c1c; padding: 3px 10px; font-weight: bold; transform: rotate(10deg); opacity: 0.8; font-size: 0.8rem !important; display: inline-block; }
-        </style>
-        
-        
-        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px;">
-            <div class="red-stamp">TOP SECRET</div>
-            <button onclick="document.getElementById('person-akte-modal').style.display='none'; document.body.style.overflow='auto';" 
-                    style="background: rgba(0,0,0,0.1); border: 1px solid #2a1b0a; color: #2a1b0a; cursor: pointer; padding: 3px 10px; font-size: 0.7rem !important;">[X] SCHLIESSEN</button>
-        </div>
-
-        <div style="display: flex; gap: 20px; align-items: flex-start;">
-            
-            <div style="position: relative; border: 1px solid #2a1b0a; padding: 3px; background: #fff; box-shadow: 2px 2px 5px rgba(0,0,0,0.2);">
-                
-                <img src="/img/hero.png" class="akte-foto" style="width: 200px; height: 250px; object-fit: cover; filter: none; cursor: zoom-in; display: block;"
-                     onclick="document.getElementById('akte-foto-zoom').style.display='flex';">
-                <div style="position: absolute; bottom: 5px; right: -10px; background: #b71c1c; color: #fff; padding: 2px 5px; font-weight: bold; font-size: 0.6rem !important; transform: rotate(-5deg);">GESPERRT</div>
-            </div>
-
-            
-            <div id="akte-foto-zoom" onclick="this.style.display='none';"
-                 style="display:none; position:fixed; inset:0; z-index:9999999; background:rgba(0,0,0,0.92); align-items:center; justify-content:center; cursor:zoom-out;">
-                <img src="/img/hero.png" style="max-width:90vw; max-height:90vh; object-fit:contain; box-shadow: 0 0 60px rgba(0,0,0,0.9); border: 2px solid #2a1b0a;">
-            </div>
-
-            
-            <div style="flex: 1;">
-                <div style="font-size: 0.5rem !important; color: #5d4037; letter-spacing: 2px; margin-bottom: 2px;">PROTOKOLL NR. 1974-Ø</div>
-                <h1 style="font-weight: bold;">MAC NERDS TERMINAL</h1>
-                <p style="color: #5d4037; font-size: 0.7rem !important; margin: 5px 0 10px;">ALIAS: </p>
-                
-                <div style="display: flex; gap: 10px;">
-                    <div style="border: 1px solid #b71c1c; padding: 2px 8px; color: #b71c1c; font-size: 0.6rem !important; font-weight: bold;">STATUS: </div>
-                    <div style="color: #2a1b0a; font-size: 0.6rem !important; font-weight: bold;">GEFAHR: <span style="letter-spacing: 1px;"></span><br><img src="/img/akte/hp_totenkopf_1.png" style="width: 70px; height: 70px; object-fit: contain; margin-top: 4px;"></div>
-                </div>
-            </div>
-        </div>
-
-        
-        <div style="margin-top: 20px; border-top: 2px solid rgba(42,27,10,0.2);">
-            
-            
-            <div class="data-row" style="display: flex; align-items: center;">
-                <div class="label" style="width: 160px; letter-spacing: 1px;">DESIGNATION:</div>
-                <div style="flex: 1; font-weight: normal;">
-                    Mac Nerds Terminal
-                    
-                </div>
-            </div>
-            
-            <div class="data-row" style="display: flex; align-items: center;">
-                <div class="label" style="width: 160px; letter-spacing: 1px;">GEBURTSDATUM:</div>
-                <div style="flex: 1; font-weight: normal;">
-                    
-                    <span style="background: rgba(0,0,0,0.8); color: rgba(0,0,0,0); margin-left: 5px; padding: 0 10px;">XXXXX</span>
-                </div>
-            </div>
-            
-            <div class="data-row" style="display: flex; align-items: center;">
-                <div class="label" style="width: 160px; letter-spacing: 1px;">BESCHÄFTIGUNG:</div>
-                <div style="flex: 1; font-weight: normal;">
-                    
-                    
-                </div>
-            </div>
-            
-            <div class="data-row" style="display: flex; align-items: center;">
-                <div class="label" style="width: 160px; letter-spacing: 1px;">SPEZIALFÄHIGK.:</div>
-                <div style="flex: 1; font-weight: normal;">
-                    
-                    
-                </div>
-            </div>
-            
-            <div class="data-row" style="display: flex; align-items: center;">
-                <div class="label" style="width: 160px; letter-spacing: 1px;">BEKANNTE KOMPL.:</div>
-                <div style="flex: 1; font-weight: normal;">
-                    
-                    <span style="background: rgba(0,0,0,0.8); color: rgba(0,0,0,0); margin-left: 5px; padding: 0 10px;">XXXXX</span>
-                </div>
-            </div>
-            
-            <div class="data-row" style="display: flex; align-items: center;">
-                <div class="label" style="width: 160px; letter-spacing: 1px;">LETZTE AKTIVITÄT:</div>
-                <div style="flex: 1; font-weight: normal;">
-                    GERADE JETZT
-                    
-                </div>
-            </div>
-            
-            <div class="data-row" style="display: flex; align-items: center;">
-                <div class="label" style="width: 160px; letter-spacing: 1px;">STABILITÄT:</div>
-                <div style="flex: 1; font-weight: normal;">
-                    
-                    
-                </div>
-            </div>
-            
-            <div class="data-row" style="display: flex; align-items: center;">
-                <div class="label" style="width: 160px; letter-spacing: 1px;">STANDORT:</div>
-                <div style="flex: 1; font-weight: normal;">
-                    
-                    
-                </div>
-            </div>
-            
-        </div>
-
-        
-        <div style="margin-top: 20px; display: flex; justify-content: space-between; align-items: flex-end;">
-            <div style="display: flex; align-items: center; gap: 10px; opacity: 0.7;">
-                <div style="width: 35px; height: 35px;">
-                    <svg viewBox="0 0 100 100" stroke="#2a1b0a" fill="none"><circle cx="50" cy="50" r="40"/><path d="M30 50 Q50 10 70 50 T30 50 Z"/></svg>
-                </div>
-                <div style="font-size: 0.6rem !important; color: #2a1b0a; line-height: 1.2;">ID-SCAN: 94.7%<br>VERIFIZIERT</div>
-            </div>
-            
-            <div style="font-family: 'Courier New', monospace; font-size: 0.75rem !important; letter-spacing: 2px; color: #5d4037; border: 1px dashed #2a1b0a; padding: 2px 10px;">ARCHIV_PERMANENT</div>
-        </div>
-    </div>
-    </div>
-</div>
-
-<style>
-    .mega-akte-btn:hover { border-color: #ff4500 !important; transform: scale(1.05); transition: all 0.2s; }
-    .akte-foto { transition: transform 0.2s, box-shadow 0.2s; }
-    .akte-foto:hover { transform: scale(1.04); box-shadow: 0 0 15px rgba(184,115,51,0.7); }
-    
-    .sascha-special, .mutti-special {
-        background-position: center;
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-color: transparent;
-        border: none;
+    .cat-btn {
+        background: transparent;
+        border: 1px solid rgba(212,175,55,0.3);
+        color: rgba(212,175,55,0.5);
+        padding: 6px 16px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.75rem;
+        letter-spacing: 2px;
         cursor: pointer;
-        position: relative;
-        display: inline-flex;
-        justify-content: center;
+        transition: all 0.2s;
+    }
+    .cat-btn:hover, .cat-btn.active {
+        border-color: #d4af37;
+        color: #d4af37;
+        background: rgba(212,175,55,0.08);
+    }
+
+    #cmd-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 20px;
+    }
+
+    .cmd-card {
+        background: linear-gradient(135deg, #1a1008 0%, #0d0d0d 100%);
+        border: 1px solid rgba(184,115,51,0.3);
+        padding: 20px;
+        transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .cmd-card:hover {
+        border-color: rgba(212,175,55,0.6);
+        box-shadow: 0 0 20px rgba(212,175,55,0.05);
+    }
+    .cmd-card.hidden { display: none; }
+
+    .cmd-card-header {
+        display: flex;
+        justify-content: space-between;
         align-items: center;
-        transition: all 0.3s ease;
-        mix-blend-mode: screen;
+        margin-bottom: 10px;
     }
-    
-    .sascha-special:hover, .mutti-special:hover { 
-        transform: scale(1.02) !important; 
-        filter: brightness(1.2); 
+    .cmd-cat-badge {
+        font-size: 0.6rem;
+        letter-spacing: 3px;
+        color: rgba(184,115,51,0.7);
     }
-    
-     
-    .time-node.omega .time-content {
-        border: 2px solid #ff4500 !important;
-        box-shadow: inset 0 0 30px rgba(255, 69, 0, 0.4), 0 0 20px rgba(255, 0, 0, 0.6);
-        animation: omega-pulse 1s infinite alternate, omega-shake 0.1s infinite;
-        background: linear-gradient(135deg, rgba(80, 20, 10, 0.95), rgba(30, 0, 0, 0.95)) !important;
+    .cmd-risk {
+        font-size: 0.6rem;
+        letter-spacing: 2px;
+        padding: 2px 8px;
+        border: 1px solid;
     }
-    .time-node.omega .node-dot {
-        border-color: #ff4500 !important;
-        background: radial-gradient(circle, #ff0000 0%, #330000 100%) !important;
-        box-shadow: 0 0 15px #ff4500, 0 0 25px rgba(255, 69, 0, 0.6);
-        animation: omega-dot-pulse 0.8s infinite alternate ease-in-out;
+    .risk-safe { color: #4caf50; border-color: rgba(76,175,80,0.4); }
+    .risk-warning { color: #ff9800; border-color: rgba(255,152,0,0.4); }
+    .risk-danger { color: #ff4500; border-color: rgba(255,69,0,0.4); }
+
+    .cmd-title {
+        color: #d4af37;
+        font-size: 1rem;
+        letter-spacing: 2px;
+        margin: 0 0 12px;
     }
-    .node-dot {
-        box-shadow: 0 0 8px rgba(212, 175, 55, 0.4);
-        transition: all 0.3s ease;
+
+    .cmd-block {
+        background: #000;
+        border: 1px solid rgba(184,115,51,0.2);
+        padding: 10px 14px;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 12px;
+        transition: border-color 0.2s;
     }
-    .time-node.omega .tc-year {
-        color: #ff4500 !important;
-        text-shadow: 0 0 10px #ff4500;
-        font-weight: 900 !important;
+    .cmd-block:hover { border-color: rgba(212,175,55,0.5); }
+    .cmd-block code {
+        color: #7ec8a4;
+        font-size: 0.8rem;
+        word-break: break-all;
+        flex: 1;
     }
-    
-    @keyframes omega-dot-pulse {
-        0% { transform: scale(1); box-shadow: 0 0 10px #ff4500; filter: brightness(1); }
-        100% { transform: scale(1.4); box-shadow: 0 0 25px #ff0000, 0 0 40px rgba(255, 0, 0, 0.8); filter: brightness(1.5); }
+    .copy-hint {
+        color: rgba(212,175,55,0.3);
+        font-size: 0.6rem;
+        letter-spacing: 1px;
+        white-space: nowrap;
+        transition: color 0.2s;
     }
-    @keyframes omega-pulse {
-        0% { box-shadow: inset 0 0 30px rgba(255, 69, 0, 0.4), 0 0 20px rgba(255, 0, 0, 0.6); border-color: rgba(255, 69, 0, 0.5); }
-        100% { box-shadow: inset 0 0 60px rgba(255, 69, 0, 0.9), 0 0 40px rgba(255, 0, 0, 1); border-color: #ff4500; }
+    .cmd-block:hover .copy-hint { color: rgba(212,175,55,0.8); }
+    .cmd-block.copied { border-color: #4caf50; }
+    .cmd-block.copied .copy-hint { color: #4caf50; }
+
+    .cmd-desc {
+        color: rgba(212,175,55,0.45);
+        font-size: 0.78rem;
+        line-height: 1.5;
+        margin: 0;
     }
-    @keyframes omega-shake {
-        0%, 100% { transform: translate(0, 0); }
-        25% { transform: translate(1px, 1px); }
-        50% { transform: translate(-1px, -1px); }
-        75% { transform: translate(1px, -1px); }
-    }
-    @keyframes omega-dot-blink {
-        50% { opacity: 0; transform: scale(1.5); }
+
+    @media (max-width: 600px) {
+        #cmd-grid { grid-template-columns: 1fr; }
     }
 </style>
+
+<script>
+function filterCat(cat, btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.cmd-card').forEach(card => {
+        card.classList.toggle('hidden', cat !== 'all' && card.dataset.cat !== cat);
+    });
+}
+
+function copyCmd(el, cmd) {
+    navigator.clipboard.writeText(cmd).then(() => {
+        const hint = el.querySelector('.copy-hint');
+        const orig = hint.textContent;
+        hint.textContent = '[KOPIERT ✓]';
+        el.classList.add('copied');
+        setTimeout(() => { hint.textContent = orig; el.classList.remove('copied'); }, 1500);
+    });
+}
+</script>
 
     </main>
 

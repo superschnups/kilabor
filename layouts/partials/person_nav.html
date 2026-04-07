@@ -1,7 +1,7 @@
-<div class="person-nav-container" style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin: 40px 0;">
+<div class="person-nav-container" style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin: 15px 0 30px;">
     {{ if eq .Section "personen" }}
-    <a href="/" class="person-back" style="display: inline-block; color: #ff4500; font-size: 0.7rem; font-weight: bold; letter-spacing: 3px; text-decoration: none; font-family: 'Courier New', monospace; border: 2px solid #ff4500; padding: 7px 20px; transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transform: rotate(8deg); background: rgba(0,0,0,0.8); box-shadow: 0 0 12px rgba(255,69,0,0.4), inset 0 0 8px rgba(255,69,0,0.2); text-transform: uppercase; margin-bottom: -10px;">
-        ⚡ ZURÜCK ZUR BASIS ⚡
+    <a href="/" class="person-back">
+        ← ZURÜCK ZUR BASIS
     </a>
     {{ end }}
     
@@ -36,11 +36,24 @@
     .person-nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; transition: transform 0.2s; }
     .person-nav-item:hover { transform: scale(1.1); }
     .person-nav-item:hover .person-nav-label { color: #d4af37 !important; }
-    .person-back:hover { 
-        transform: rotate(0deg) scale(1.1) !important; 
-        color: #ff0000 !important; 
-        border-color: #ff0000 !important; 
-        box-shadow: 0 0 25px #ff4500 !important;
-        background: rgba(255, 69, 0, 0.1) !important;
+    .person-back {
+        display: inline-block;
+        color: rgba(212,175,55,0.6);
+        font-size: 0.7rem;
+        font-weight: bold;
+        letter-spacing: 4px;
+        text-decoration: none;
+        font-family: 'Courier New', monospace;
+        border: 1px solid rgba(212,175,55,0.25);
+        padding: 6px 20px;
+        background: transparent;
+        text-transform: uppercase;
+        transition: all 0.2s;
+    }
+    .person-back:hover {
+        color: #d4af37;
+        border-color: rgba(212,175,55,0.6);
+        background: rgba(212,175,55,0.05);
+        letter-spacing: 5px;
     }
 </style>

@@ -12,7 +12,16 @@ stabilitaet: "MASSIV (wie ein V8-Block)"
 sicherheitsstufe: "GELB"
 initial: "B"
 date: 2026-03-18
-img: "/img/hp_freddy_2.png"
+img: "/img/akte/hp_fredfdy_akte_1.png"
+comic_img: "/img/comicFigures/hp_freddy_comic_1.png"
+stat_gefahr: 65
+stat_stabilitaet: 85
+stat_chaos: 50
+stat_kompetenz: 92
+akte_fotos:
+  - "/img/akte/hp_fredfdy_akte_1.png"
+  - "/img/akte/hp_freddy_akte_2.png"
+  - "/img/akte/hp_freddy_akte_3.png"
 events:
   - year: 1981
     text: '⚡ KYBERNETISCHER KNOTEN V1.0 GEHT ONLINE. Erste mechanische Diagnostik: Stabil. Ansaugtrakt kalibriert. Chaos-Index: ERHÖHT.'
