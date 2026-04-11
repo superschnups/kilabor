@@ -32,13 +32,15 @@
     <div id="cat-filter" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 30px;">
         <button class="cat-btn active" data-cat="all" onclick="filterCat('all', this)">ALLE</button>
         
-        <button class="cat-btn" data-cat="system" onclick="filterCat('system', this)">SYSTEM</button>
+        <button class="cat-btn" data-cat="dateien" onclick="filterCat('dateien', this)">DATEIEN</button>
         
         <button class="cat-btn" data-cat="netzwerk" onclick="filterCat('netzwerk', this)">NETZWERK</button>
         
-        <button class="cat-btn" data-cat="dateien" onclick="filterCat('dateien', this)">DATEIEN</button>
-        
         <button class="cat-btn" data-cat="performance" onclick="filterCat('performance', this)">PERFORMANCE</button>
+        
+        <button class="cat-btn" data-cat="sicherheit" onclick="filterCat('sicherheit', this)">SICHERHEIT</button>
+        
+        <button class="cat-btn" data-cat="system" onclick="filterCat('system', this)">SYSTEM</button>
         
         <button class="cat-btn" data-cat="tweaks" onclick="filterCat('tweaks', this)">TWEAKS</button>
         
@@ -52,7 +54,7 @@
                 <span class="cmd-cat-badge">SYSTEM</span>
                 <span class="cmd-risk risk-safe">SAFE</span>
             </div>
-            <h3 class="cmd-title">Hardware-Kurzprofil</h3>
+            <h3 class="cmd-title">Hardware-Kurzprofil !</h3>
             <div class="cmd-block" onclick="copyCmd(this, 'system_profiler SPHardwareDataType | grep -E \u0026#34;Model|Chip|Memory|Serial\u0026#34;')">
                 <code>system_profiler SPHardwareDataType | grep -E &#34;Model|Chip|Memory|Serial&#34;</code>
                 <span class="copy-hint">[KOPIEREN]</span>
@@ -143,12 +145,25 @@
                 <span class="cmd-cat-badge">TWEAKS</span>
                 <span class="cmd-risk risk-safe">SAFE</span>
             </div>
-            <h3 class="cmd-title">Dock: sofortiges Einblenden</h3>
+            <h3 class="cmd-title">Dock: sofortiges Einblenden!</h3>
             <div class="cmd-block" onclick="copyCmd(this, 'defaults write com.apple.dock autohide-delay -float 0 \u0026amp;\u0026amp; defaults write com.apple.dock autohide-time-modifier -float 0.3 \u0026amp;\u0026amp; killall Dock')">
                 <code>defaults write com.apple.dock autohide-delay -float 0 &amp;&amp; defaults write com.apple.dock autohide-time-modifier -float 0.3 &amp;&amp; killall Dock</code>
                 <span class="copy-hint">[KOPIEREN]</span>
             </div>
             <p class="cmd-desc">Entfernt die Verzögerung beim Dock-Einblenden. Sofort aktiv.</p>
+        </div>
+        
+        <div class="cmd-card" data-cat="sicherheit">
+            <div class="cmd-card-header">
+                <span class="cmd-cat-badge">SICHERHEIT</span>
+                <span class="cmd-risk risk-safe">SAFE</span>
+            </div>
+            <h3 class="cmd-title">SSH Key im Agent speichern</h3>
+            <div class="cmd-block" onclick="copyCmd(this, 'ssh-add --apple-use-keychain ~\/.ssh\/pfadzumkey')">
+                <code>ssh-add --apple-use-keychain ~/.ssh/pfadzumkey</code>
+                <span class="copy-hint">[KOPIEREN]</span>
+            </div>
+            <p class="cmd-desc">fügt für die aktuelle session den key zum ageten hinzu, beim nächsten aufruf von ssh host wird der key austomatisch benutzt</p>
         </div>
         
     </div>

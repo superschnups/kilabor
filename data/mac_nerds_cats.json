@@ -1,1 +1,8 @@
-["system", "netzwerk", "dateien", "performance", "tweaks"]
+[
+  "dateien",
+  "netzwerk",
+  "performance",
+  "sicherheit",
+  "system",
+  "tweaks"
+]

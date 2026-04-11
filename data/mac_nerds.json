@@ -1,7 +1,7 @@
 [
     {
         "cat": "system",
-        "title": "Hardware-Kurzprofil",
+        "title": "Hardware-Kurzprofil !",
         "cmd": "system_profiler SPHardwareDataType | grep -E \"Model|Chip|Memory|Serial\"",
         "desc": "Model, Chip, RAM und Seriennummer auf einen Blick — ohne Klicken durch Systeminfo.",
         "risk": "safe"
@@ -50,9 +50,16 @@
     },
     {
         "cat": "tweaks",
-        "title": "Dock: sofortiges Einblenden",
+        "title": "Dock: sofortiges Einblenden!",
         "cmd": "defaults write com.apple.dock autohide-delay -float 0 && defaults write com.apple.dock autohide-time-modifier -float 0.3 && killall Dock",
         "desc": "Entfernt die Verzögerung beim Dock-Einblenden. Sofort aktiv.",
+        "risk": "safe"
+    },
+    {
+        "cat": "sicherheit",
+        "title": "SSH Key im Agent speichern",
+        "cmd": "ssh-add --apple-use-keychain ~/.ssh/pfadzumkey",
+        "desc": "fügt für die aktuelle session den key zum ageten hinzu, beim nächsten aufruf von ssh host wird der key austomatisch benutzt",
         "risk": "safe"
     }
 ]

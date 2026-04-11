@@ -551,13 +551,15 @@
         <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 24px;">
             <button class="mn-cat active" data-cat="all" onclick="mnFilter('all', this)">ALLE</button>
             
-            <button class="mn-cat" data-cat="system" onclick="mnFilter('system', this)">SYSTEM</button>
+            <button class="mn-cat" data-cat="dateien" onclick="mnFilter('dateien', this)">DATEIEN</button>
             
             <button class="mn-cat" data-cat="netzwerk" onclick="mnFilter('netzwerk', this)">NETZWERK</button>
             
-            <button class="mn-cat" data-cat="dateien" onclick="mnFilter('dateien', this)">DATEIEN</button>
-            
             <button class="mn-cat" data-cat="performance" onclick="mnFilter('performance', this)">PERFORMANCE</button>
+            
+            <button class="mn-cat" data-cat="sicherheit" onclick="mnFilter('sicherheit', this)">SICHERHEIT</button>
+            
+            <button class="mn-cat" data-cat="system" onclick="mnFilter('system', this)">SYSTEM</button>
             
             <button class="mn-cat" data-cat="tweaks" onclick="mnFilter('tweaks', this)">TWEAKS</button>
             
@@ -571,7 +573,7 @@
                     <span style="font-size: 0.6rem; letter-spacing: 3px; color: rgba(184,115,51,0.7);">SYSTEM</span>
                     <span class="mn-risk risk-safe">SAFE</span>
                 </div>
-                <h3 style="color: #d4af37; font-size: 0.95rem; letter-spacing: 2px; margin: 0 0 10px;">Hardware-Kurzprofil</h3>
+                <h3 style="color: #d4af37; font-size: 0.95rem; letter-spacing: 2px; margin: 0 0 10px;">Hardware-Kurzprofil !</h3>
                 <div class="mn-cmd-block" onclick="mnCopy(this, 'system_profiler SPHardwareDataType | grep -E \u0026#34;Model|Chip|Memory|Serial\u0026#34;')">
                     <code style="color: #7ec8a4; font-size: 0.78rem; word-break: break-all; flex: 1;">system_profiler SPHardwareDataType | grep -E &#34;Model|Chip|Memory|Serial&#34;</code>
                     <span class="mn-copy-hint">[KOPIEREN]</span>
@@ -662,12 +664,25 @@
                     <span style="font-size: 0.6rem; letter-spacing: 3px; color: rgba(184,115,51,0.7);">TWEAKS</span>
                     <span class="mn-risk risk-safe">SAFE</span>
                 </div>
-                <h3 style="color: #d4af37; font-size: 0.95rem; letter-spacing: 2px; margin: 0 0 10px;">Dock: sofortiges Einblenden</h3>
+                <h3 style="color: #d4af37; font-size: 0.95rem; letter-spacing: 2px; margin: 0 0 10px;">Dock: sofortiges Einblenden!</h3>
                 <div class="mn-cmd-block" onclick="mnCopy(this, 'defaults write com.apple.dock autohide-delay -float 0 \u0026amp;\u0026amp; defaults write com.apple.dock autohide-time-modifier -float 0.3 \u0026amp;\u0026amp; killall Dock')">
                     <code style="color: #7ec8a4; font-size: 0.78rem; word-break: break-all; flex: 1;">defaults write com.apple.dock autohide-delay -float 0 &amp;&amp; defaults write com.apple.dock autohide-time-modifier -float 0.3 &amp;&amp; killall Dock</code>
                     <span class="mn-copy-hint">[KOPIEREN]</span>
                 </div>
                 <p style="color: rgba(212,175,55,0.45); font-size: 0.75rem; line-height: 1.5; margin: 0;">Entfernt die Verzögerung beim Dock-Einblenden. Sofort aktiv.</p>
+            </div>
+            
+            <div class="mn-card" data-cat="sicherheit">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="font-size: 0.6rem; letter-spacing: 3px; color: rgba(184,115,51,0.7);">SICHERHEIT</span>
+                    <span class="mn-risk risk-safe">SAFE</span>
+                </div>
+                <h3 style="color: #d4af37; font-size: 0.95rem; letter-spacing: 2px; margin: 0 0 10px;">SSH Key im Agent speichern</h3>
+                <div class="mn-cmd-block" onclick="mnCopy(this, 'ssh-add --apple-use-keychain ~\/.ssh\/pfadzumkey')">
+                    <code style="color: #7ec8a4; font-size: 0.78rem; word-break: break-all; flex: 1;">ssh-add --apple-use-keychain ~/.ssh/pfadzumkey</code>
+                    <span class="mn-copy-hint">[KOPIEREN]</span>
+                </div>
+                <p style="color: rgba(212,175,55,0.45); font-size: 0.75rem; line-height: 1.5; margin: 0;">fügt für die aktuelle session den key zum ageten hinzu, beim nächsten aufruf von ssh host wird der key austomatisch benutzt</p>
             </div>
             
         </div>
