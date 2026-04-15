@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -E \"\\\\.\\(png|jpg|jpeg|gif|webp|woff2?\\)$\")",
+      "Bash(grep -E \"\\\\.\\(png|jpg|jpeg|gif|webp|woff2|woff|ttf|eot\\)$\")",
+      "Bash(xargs git:*)",
+      "Bash(grep -zE \"\\\\.\\(png|jpg|jpeg|gif|webp|woff2|woff|ttf|eot\\)$\")",
+      "Bash(xargs -0 git rm --cached --)",
+      "Bash(git commit:*)",
+      "Bash(git cat-file:*)",
+      "Bash(git rev-list:*)",
+      "Bash(pip3 install:*)",
+      "Bash(git filter-repo:*)",
+      "Bash(git remote:*)",
+      "Bash(git push:*)"
+    ]
+  }
+}
